@@ -21,13 +21,22 @@ Here is an example of the code:
 .. code-block:: Python
 
     # test
-    slab = slab_generator(Cu_bulk, (5, 3, 3), 4, 18.0, (2, 2, 1))
+
+    from surfgen.surfgen import slab_generator, surf_atom_finder, connection_matrix, find_all_ads_sites
+    from ase.visualize import view
+    from ase.build import bulk, molecule
+    from ase.constraints import FixAtoms
+
+    Cu_bulk = bulk('Cu', 'fcc', 3.579)
+
+    slab = slab_generator(Cu_bulk, (1, 0, 0), 4, 18.0, (2, 2, 1))
 
     bond_length = 2.53 # only for Cu, it can also be in a range
 
     H = molecule('H')
     O = molecule('O')
     N = molecule('N')
+    Cl = molecule('Cl')
 
     slab_trial = slab[0]
 
@@ -57,9 +66,13 @@ Here is an example of the code:
         H.set_positions([[site[0], site[1], site[2]]])
         slab_trial += H
 
-    for site in ads_sites['four_fold']:
+    for site in ads_sites['hollow']:
         N.set_positions([[site[0], site[1], site[2]]])
         slab_trial += N
+
+    for site in ads_sites['four_fold']:
+        Cl.set_positions([[site[0], site[1], site[2]]])
+        slab_trial += Cl
 
     view(slab_trial)
 

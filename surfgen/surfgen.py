@@ -210,7 +210,7 @@ def connection_matrix(slab, surface_atoms, bond_length):
             * conn_coordinates. It defines all the coordinates of the atoms above
 
         One list is:
-        
+
             * outer_atom_index. It defines all the index of atoms on the outside of our slab.
     """
 
@@ -562,8 +562,6 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
                             d23 = np.linalg.norm(coord_atom1 - coord_atom2)
                             d24 = np.linalg.norm(coord_atom1 - coord_atom3)
                             d34 = np.linalg.norm(coord_atom2 - coord_atom3)
-
-                            print(d12, d13, d14, d23, d24, d34)
 
                             if (abs(d12 - bond_length) < 0.1):
                                 tmp = np.sort(np.array([index_1, index_2]))
