@@ -80,7 +80,9 @@ Here is an example of the code:
    :maxdepth: 2
    :caption: Contents:
 
+   what_will_come
    modules
+   history_surfgen
 
 Indices and tables
 ==================
