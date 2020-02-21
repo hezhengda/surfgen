@@ -17,7 +17,7 @@ from matplotlib import pyplot as plt
 
 ############################## Here comes the Python code ##############################
 
-def slab_generator(bulk, miller_index, layers, vacuum, supercell):
+def slab_generator(bulk, miller_index, slab_height, vacuum, supercell):
 
     """
     This function can generate slab from the ASE bulk object
@@ -30,11 +30,11 @@ def slab_generator(bulk, miller_index, layers, vacuum, supercell):
     miller_index:
         (3x1) tuple. It defines the miller index of the surface
 
-    layers:
-        Integer. It defines how many layers we want for the surface slab
+    slab_height:
+        Real (in Angstrom). It defines how large your surface slab should be
 
     vacuum:
-        Real. It defines the length of the vacuum layer
+        Real (in Angstrom). It defines the length of the vacuum layer
 
     supercell:
         (3x1) tuple or (3x3) np.array. It defines the supercell of our surface slab
@@ -45,9 +45,6 @@ def slab_generator(bulk, miller_index, layers, vacuum, supercell):
         Atoms object, which is the slab that we want
     """
 
-    # since in pymatgen, the layers we need is usually two time as ASE, so
-    pmg_layers = layers * 2
-
     # convert ASE object (bulk) to pymatgen object
     bulk_pmg = AseAtomsAdaptor.get_structure(bulk)
     bulk_pmg = SpacegroupAnalyzer(bulk_pmg).get_conventional_standard_structure()
@@ -55,7 +52,7 @@ def slab_generator(bulk, miller_index, layers, vacuum, supercell):
     # create miller_index surfaces (return a list of surfaces)
     slab_gen = SlabGenerator(bulk_pmg,
                              miller_index,
-                             min_slab_size = pmg_layers,
+                             min_slab_size = slab_height,
                              min_vacuum_size = vacuum,
                              center_slab = True)
 
