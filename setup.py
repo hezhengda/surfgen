@@ -1,7 +1,7 @@
 import setuptools
 from setuptools import setup
 setup(name='surfgen',
-version='0.1.1',
+version='0.1.2',
 description='Tools for creating slab models',
 author='Zheng-Da He',
 author_email='z.he@fz-juelich.de, jameshzd@mail.ustc.edu.cn, zhengdahe.electrocatalysis@gmail.com',

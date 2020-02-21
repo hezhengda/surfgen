@@ -31,7 +31,9 @@ def slab_generator(bulk, miller_index, slab_height, vacuum, supercell):
         (3x1) tuple. It defines the miller index of the surface
 
     slab_height:
-        Real (in Angstrom). It defines how large your surface slab should be
+        Real (in Angstrom). It defines how large your surface slab should be on z-direction
+
+        .. note:: You need to try slab_height first to generate the desired slab that you want to have. A role of thumb is that usually 10.0 is large enough for the calculations.
 
     vacuum:
         Real (in Angstrom). It defines the length of the vacuum layer
