@@ -530,7 +530,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
     for site in sites:
 
-        ads_sites[site] = [] # an empty list
+        ads_sites[site] = {} # an empty dictionary which contains two things: (1) location (2) norm_vector
+        ads_sites[site]['location'] = [] # empty list of "location"
+        ads_sites[site]['norm_vector'] = [] # empty list of "norm_vector"
 
     # three sets for storing all adsorption sites:
 
@@ -592,7 +594,11 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                     if not (name_hollow in hcp_site_ensemble):
                         coord_hollow_site = (coord_center_atom + coord_atom1 + coord_atom2) / 3 + height['hollow'] * norm_vector
-                        ads_sites['hollow'].append(coord_hollow_site)
+
+                        ads_sites['hollow']['location'].append(coord_hollow_site)
+
+                        ads_sites['hollow']['norm_vector'].append(norm_vector)
+
                         hcp_site_ensemble.append(name_hollow)
 
                     # check whether it can form a bridge site between central atom and item 1
@@ -602,7 +608,11 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                     if not (name_bridge in bridge_site_ensemble):
                         coord_bridge_site = (coord_center_atom + coord_atom1) / 2 + height['bridge'] * norm_vector
-                        ads_sites['bridge'].append(coord_bridge_site)
+
+                        ads_sites['bridge']['location'].append(coord_bridge_site)
+
+                        ads_sites['bridge']['norm_vector'].append(norm_vector)
+
                         bridge_site_ensemble.append(name_bridge)
 
                     # check whether it can form a bridge site between central atom and item 2
@@ -614,7 +624,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                         coord_bridge_site = (coord_center_atom + coord_atom2) / 2 + height['bridge'] * norm_vector
 
-                        ads_sites['bridge'].append(coord_bridge_site)
+                        ads_sites['bridge']['location'].append(coord_bridge_site)
+
+                        ads_sites['bridge']['norm_vector'].append(norm_vector)
 
                         bridge_site_ensemble.append(name_bridge)
 
@@ -627,7 +639,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                         coord_bridge_site = (coord_center_atom + coord_atom2) / 2 + height['bridge'] * norm_vector
 
-                        ads_sites['bridge'].append(coord_bridge_site)
+                        ads_sites['bridge']['location'].append(coord_bridge_site)
+
+                        ads_sites['bridge']['norm_vector'].append(norm_vector)
 
                         bridge_site_ensemble.append(name_bridge)
 
@@ -690,7 +704,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                 coord_four_fold_site = (coord_center_atom + coord_atom1 + coord_atom2 + coord_atom3) / 4 + height['four_fold'] * norm_vector
 
-                                ads_sites['four_fold'].append(coord_four_fold_site)
+                                ads_sites['four_fold']['location'].append(coord_four_fold_site)
+
+                                ads_sites['four_fold']['norm_vector'].append(norm_vector)
 
                                 four_fold_site_ensemble.append(name_four_fold)
 
@@ -718,7 +734,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     coord_bridge_site = (coord_center_atom + coord_atom1) / 2 + height['bridge'] * norm_vector
 
-                                    ads_sites['bridge'].append(coord_bridge_site)
+                                    ads_sites['bridge']['location'].append(coord_bridge_site)
+
+                                    ads_sites['bridge']['norm_vector'].append(norm_vector)
 
                                     bridge_site_ensemble.append(name_bridge)
 
@@ -732,7 +750,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     coord_bridge_site = (coord_center_atom + coord_atom2) / 2 + height['bridge'] * norm_vector
 
-                                    ads_sites['bridge'].append(coord_bridge_site)
+                                    ads_sites['bridge']['location'].append(coord_bridge_site)
+
+                                    ads_sites['bridge']['norm_vector'].append(norm_vector)
 
                                     bridge_site_ensemble.append(name_bridge)
 
@@ -746,7 +766,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     coord_bridge_site = (coord_center_atom + coord_atom3) / 2 + height['bridge'] * norm_vector
 
-                                    ads_sites['bridge'].append(coord_bridge_site)
+                                    ads_sites['bridge']['location'].append(coord_bridge_site)
+
+                                    ads_sites['bridge']['norm_vector'].append(norm_vector)
 
                                     bridge_site_ensemble.append(name_bridge)
 
@@ -760,7 +782,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     coord_bridge_site = (coord_atom1 + coord_atom2) / 2 + height['bridge'] * norm_vector
 
-                                    ads_sites['bridge'].append(coord_bridge_site)
+                                    ads_sites['bridge']['location'].append(coord_bridge_site)
+
+                                    ads_sites['bridge']['norm_vector'].append(norm_vector)
 
                                     bridge_site_ensemble.append(name_bridge)
 
@@ -774,7 +798,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     coord_bridge_site = (coord_atom1 + coord_atom3) / 2 + height['bridge'] * norm_vector
 
-                                    ads_sites['bridge'].append(coord_bridge_site)
+                                    ads_sites['bridge']['location'].append(coord_bridge_site)
+
+                                    ads_sites['bridge']['norm_vector'].append(norm_vector)
 
                                     bridge_site_ensemble.append(name_bridge)
 
@@ -788,7 +814,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     coord_bridge_site = (coord_atom2 + coord_atom3) / 2 + height['bridge'] * norm_vector
 
-                                    ads_sites['bridge'].append(coord_bridge_site)
+                                    ads_sites['bridge']['location'].append(coord_bridge_site)
+
+                                    ads_sites['bridge']['norm_vector'].append(norm_vector)
 
                                     bridge_site_ensemble.append(name_bridge)
 
@@ -802,7 +830,9 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                 ontop_site_ensemble.append(int(i))
 
-                ads_sites['ontop'].append(coord_center_atom + height['ontop'] * norm_vec_average)
+                ads_sites['ontop']['location'].append(coord_center_atom + height['ontop'] * norm_vec_average)
+
+                ads_sites['ontop']['norm_vector'].append(norm_vec_average)
 
         else:
 
