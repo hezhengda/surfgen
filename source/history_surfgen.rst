@@ -1,6 +1,10 @@
 History of the Version of surfgen
 ===========================
 
+**22/02/2020**
+
+* 0.1.3: In this version we add the functionalities of manipulating adsorbed atoms. And also adjust the codes to make it looks prettier. 
+
 **21/02/2020**
 
 * 0.1.2: This version we change the parameter in slab_generator due to misread the documentation of pymatgen.
