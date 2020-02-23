@@ -1185,8 +1185,6 @@ def check_hybridization(slab, first_layer, norm_vector, molecule, mol_index, hyb
 
                     atom.position -= molecule[mol_index].position # let mol_index be (0, 0, 0)
 
-                    print(atom.symbol, atom.position)
-
                 bond_y = np.linalg.norm(vector_molIndex_nearAtom) * np.cos(np.radians(60))
 
                 bond_x = np.linalg.norm(vector_molIndex_nearAtom) * np.sin(np.radians(60))
@@ -1404,10 +1402,6 @@ def align_adsorbate_one_atom(slab, first_layer, site, norm_vector, label, molecu
 
                 atom.position = np.matmul(rotation_matrix, atom.position)
 
-        for atom in molecule:
-
-            print(atom.symbol, atom.position)
-
         # move all atoms
 
         move_vector = site - molecule[mol_index].position # move all atoms to the adsorption site
@@ -1427,8 +1421,6 @@ def align_adsorbate_one_atom(slab, first_layer, site, norm_vector, label, molecu
                 if atom.index != mol_index:
 
                     atom.position = atom.position + 2 * np.dot(molecule[mol_index].position - atom.position, norm_vector) / (np.power(np.linalg.norm(norm_vector),2)) * norm_vector
-
-                    print(2 * np.dot(molecule[mol_index].position - atom.position, norm_vector) / (np.power(np.linalg.norm(norm_vector),2)) * norm_vector)
 
             return molecule
 
@@ -1485,48 +1477,3 @@ def align_adsorbate_one_atom(slab, first_layer, site, norm_vector, label, molecu
                     atom.position = atom.position + 2 * np.dot(molecule[mol_index].position - atom.position, norm_vector) / (np.power(np.linalg.norm(norm_vector),2)) * norm_vector
 
             return molecule
-
-############################## Sample codes ##############################
-
-# # test
-# slab = slab_generator(Cu_bulk, (5, 3, 3), 4, 18.0, (2, 2, 1))
-#
-# bond_length = 2.53
-#
-# H = molecule('H')
-# O = molecule('O')
-# N = molecule('N')
-#
-# slab_trial = slab[0]
-#
-# surf_atoms = surf_atom_finder(slab_trial)
-#
-# # set constraints, and fix atoms
-# c = FixAtoms([atom.index for atom in slab_trial if atom.index in surf_atoms])
-# slab_trial.set_constraint(c)
-#
-# connector, conn_coordinates, outer_ite = connection_matrix(slab_trial, surf_atoms, bond_length)
-#
-# # print(connector)
-# # print(conn_coordinates)
-#
-# ads_sites = find_all_ads_sites(slab_trial, connector, conn_coordinates, surf_atoms, bond_length)
-#
-# for site in ads_sites:
-#     print('{} site has {} possible positions'.format(site, len(ads_sites[site])))
-#     for coord in ads_sites[site]:
-#         print('The location is: {}'.format(coord))
-#
-# for site in ads_sites['ontop']:
-#     O.set_positions([[site[0], site[1], site[2]]])
-#     slab_trial += O
-#
-# for site in ads_sites['bridge']:
-#     H.set_positions([[site[0], site[1], site[2]]])
-#     slab_trial += H
-#
-# for site in ads_sites['four_fold']:
-#     N.set_positions([[site[0], site[1], site[2]]])
-#     slab_trial += N
-#
-# view(slab_trial)
