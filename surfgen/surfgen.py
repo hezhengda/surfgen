@@ -1244,7 +1244,7 @@ def align_adsorbate_one_atom(slab, first_layer, site, norm_vector, label, molecu
         Numpy Array (3x1). The norm_vector of the adsorption site ('ontop', 'bridge', 'hollow', 'four_fold')
 
     label:
-        String. The index of atoms that construct the adsorption site
+        List of Strings. The index of atoms that construct the adsorption site
 
     molecule:
         Atoms Object. The adsorbate
@@ -1281,6 +1281,15 @@ def align_adsorbate_one_atom(slab, first_layer, site, norm_vector, label, molecu
                 lowest_index = int(atom_index)
 
     site_lowest_surface_atom = slab[lowest_index].position # get the lowest point
+
+    # if there are no near atoms, then we should just more it to the adsorption site
+    if num_near_atoms == 0:
+
+        move_vector = site - molecule[0].position
+
+        molecule[0].position += move_vector
+
+        return molecule
 
     # if there is one near atoms, then we should align it with the norm_vector
     if num_near_atoms == 1:
