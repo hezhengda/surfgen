@@ -513,6 +513,14 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
     Return:
         a dictionary which contains informations for 'ontop', 'bridge', 'hollow' and 'four_fold' sites
+
+        There are three pieces of information:
+
+        * location: contains the location of adsorption sites
+
+        * norm_vector: contains the norm_vector for each adsorption sites
+
+        * label: contains the index of atoms that construct the adsorption sites
     """
 
     # type of sites and height of adsorption site
@@ -533,6 +541,7 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
         ads_sites[site] = {} # an empty dictionary which contains two things: (1) location (2) norm_vector
         ads_sites[site]['location'] = [] # empty list of "location"
         ads_sites[site]['norm_vector'] = [] # empty list of "norm_vector"
+        ads_sites[site]['label'] = [] # which atoms form the adsorption site
 
     # three sets for storing all adsorption sites:
 
@@ -599,6 +608,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                         ads_sites['hollow']['norm_vector'].append(norm_vector)
 
+                        ads_sites['hollow']['label'].append(str(tmp[0]) + '.' + str(tmp[1]) + '.' + str(tmp[2]))
+
                         hcp_site_ensemble.append(name_hollow)
 
                     # check whether it can form a bridge site between central atom and item 1
@@ -612,6 +623,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
                         ads_sites['bridge']['location'].append(coord_bridge_site)
 
                         ads_sites['bridge']['norm_vector'].append(norm_vector)
+
+                        ads_sites['bridge']['label'].append(str(tmp[0]) + '.' + str(tmp[1]))
 
                         bridge_site_ensemble.append(name_bridge)
 
@@ -628,6 +641,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                         ads_sites['bridge']['norm_vector'].append(norm_vector)
 
+                        ads_sites['bridge']['label'].append(str(tmp[0]) + '.' + str(tmp[1]))
+
                         bridge_site_ensemble.append(name_bridge)
 
                     # check whether it can form a bridge site between item 1 and item 2
@@ -642,6 +657,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
                         ads_sites['bridge']['location'].append(coord_bridge_site)
 
                         ads_sites['bridge']['norm_vector'].append(norm_vector)
+
+                        ads_sites['bridge']['label'].append(str(tmp[0]) + '.' + str(tmp[1]))
 
                         bridge_site_ensemble.append(name_bridge)
 
@@ -708,6 +725,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                 ads_sites['four_fold']['norm_vector'].append(norm_vector)
 
+                                ads_sites['four_fold']['label'].append(str(tmp[0]) + '.' + str(tmp[1]) + '.' + str(tmp[2]) + '.' + str([tmp[3]]))
+
                                 four_fold_site_ensemble.append(name_four_fold)
 
                             # construct bridge sites
@@ -738,6 +757,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     ads_sites['bridge']['norm_vector'].append(norm_vector)
 
+                                    ads_sites['bridge']['label'].append(str(tmp[0]) + '.' + str(tmp[1]))
+
                                     bridge_site_ensemble.append(name_bridge)
 
                             if (abs(d13 - bond_length) < 0.1):
@@ -753,6 +774,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
                                     ads_sites['bridge']['location'].append(coord_bridge_site)
 
                                     ads_sites['bridge']['norm_vector'].append(norm_vector)
+
+                                    ads_sites['bridge']['label'].append(str(tmp[0]) + '.' + str(tmp[1]))
 
                                     bridge_site_ensemble.append(name_bridge)
 
@@ -770,6 +793,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     ads_sites['bridge']['norm_vector'].append(norm_vector)
 
+                                    ads_sites['bridge']['label'].append(str(tmp[0]) + '.' + str(tmp[1]))
+
                                     bridge_site_ensemble.append(name_bridge)
 
                             if (abs(d23 - bond_length) < 0.1):
@@ -785,6 +810,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
                                     ads_sites['bridge']['location'].append(coord_bridge_site)
 
                                     ads_sites['bridge']['norm_vector'].append(norm_vector)
+
+                                    ads_sites['bridge']['label'].append(str(tmp[0]) + '.' + str(tmp[1]))
 
                                     bridge_site_ensemble.append(name_bridge)
 
@@ -802,6 +829,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     ads_sites['bridge']['norm_vector'].append(norm_vector)
 
+                                    ads_sites['bridge']['label'].append(str(tmp[0]) + '.' + str(tmp[1]))
+
                                     bridge_site_ensemble.append(name_bridge)
 
                             if (abs(d34 - bond_length) < 0.1):
@@ -818,6 +847,8 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                     ads_sites['bridge']['norm_vector'].append(norm_vector)
 
+                                    ads_sites['bridge']['label'].append(str(tmp[0]) + '.' + str(tmp[1]))
+
                                     bridge_site_ensemble.append(name_bridge)
 
         if average(tmp_vec) != 0:
@@ -830,9 +861,13 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                 ontop_site_ensemble.append(int(i))
 
+                tmp[0] = int(i)
+
                 ads_sites['ontop']['location'].append(coord_center_atom + height['ontop'] * norm_vec_average)
 
                 ads_sites['ontop']['norm_vector'].append(norm_vec_average)
+
+                ads_sites['ontop']['label'].append(str(tmp[0]))
 
         else:
 
@@ -864,15 +899,39 @@ def find_connection_atoms(molecule, mol_index):
 
     for atom in molecule:
 
-        coord_atom = atom.position
+        if atom.index != mol_index:
 
-        d = np.linalg.norm(coord_atom - coord_mol_index)
+            coord_atom = atom.position
 
-        if (d > 0.5) and (d < 2.0): # 0.5A - 2.0A is our first guess, could be larger, need to be validated.
+            d = np.linalg.norm(coord_atom - coord_mol_index)
 
-            list_return.append(atom.index)
+            if (d > 0.5) and (d < 2.0): # 0.5A - 2.0A is our first guess, could be larger, need to be validated.
+
+                list_return.append(atom.index)
 
     return list_return
+
+def check_above(site, molecule):
+
+    """
+    This function can check whether all atoms in molecule are above the adsorption site
+
+    Parameters:
+
+    site:
+        Numpy Array. The adsorption site that we want
+
+    molecule:
+        Atoms Object. The adsorbates.
+    """
+
+    for atom in molecule:
+
+        if atom.position[2] < site[2]:
+
+            return False
+
+    return True
 
 def dist_molecule_surface(slab, first_layer, molecule):
 
@@ -985,9 +1044,18 @@ def check_hybridization(slab, first_layer, norm_vector, molecule, mol_index, hyb
 
         vector_molIndex_nearAtom = coord_near_atom - coord_mol_index
 
-        cos_two_vector = np.dot(vector_molIndex_nearAtom, norm_vector)/norm(vector_molIndex_nearAtom)/norm(norm_vector) # -> cosine of the angle
+        cos_two_vector = np.dot(vector_molIndex_nearAtom, -norm_vector)/(np.linalg.norm(vector_molIndex_nearAtom) * np.linalg.norm(norm_vector)) # -> cosine of the angle
 
-        angle = np.arccos(np.clip(c, -1, 1)) # if you really want the angle
+        # sometimes cos_two_vector can be larger than 1 (very exceptional case), we need to do something
+        if cos_two_vector > 1:
+
+            cos_two_vector = 2 - cos_two_vector
+
+        elif cos_two_vector < -1:
+
+            cos_two_vector = -2 - cos_two_vector
+
+        angle = np.arccos(cos_two_vector) # if you really want the angle
 
         angle_degree = np.degrees(angle)
 
@@ -1002,7 +1070,7 @@ def check_hybridization(slab, first_layer, norm_vector, molecule, mol_index, hyb
 
             if abs(angle_degree - 180) < 5:
 
-                return 'Check', molecule
+                return molecule
 
             else:
 
@@ -1044,6 +1112,10 @@ def check_hybridization(slab, first_layer, norm_vector, molecule, mol_index, hyb
 
                 molecule_original = copy.deepcopy(molecule) # original molecule
 
+                for atom in molecule_original:
+
+                    atom.position -= molecule[mol_index].position # let mol_index be (0, 0, 0)
+
                 bond_y = np.linalg.norm(vector_molIndex_nearAtom) * np.cos(np.radians(60))
 
                 bond_x = np.linalg.norm(vector_molIndex_nearAtom) * np.sin(np.radians(60))
@@ -1054,27 +1126,31 @@ def check_hybridization(slab, first_layer, norm_vector, molecule, mol_index, hyb
                     rad = np.radians(theta)
 
                     # copy molecule to its original point
-                    molecule = copy.deepcopy(molecule_original)
+                    molecule_check = copy.deepcopy(molecule_original)
 
                     coord_near_atom_sp2 =  bond_y * norm_vector + bond_x * np.cos(rad) * x_rotate + bond_x * np.sin(rad) * y_rotate
 
-                    new_vector_molIndex_nearAtom = coord_near_atom_sp2 - coord_mol_index
+                    new_vector_molIndex_nearAtom = coord_near_atom_sp2
 
                     # rotate the original vector to the new vector
                     rotation_matrix_origin_new = rotation_matrix_from_vectors(vector_molIndex_nearAtom, new_vector_molIndex_nearAtom)
 
                     # rotate every atom in the molecule
-                    for atom in molecule:
+                    for atom in molecule_check:
 
                         if atom.index != mol_index:
 
                             atom.position = np.matmul(rotation_matrix_origin_new, atom.position)
 
-                        d = dist_molecule_surface(slab, first_layer, molecule)
+                    for atom in molecule_check:
 
-                        if d > 0.9:
+                        atom.position += molecule[mol_index].position
 
-                            return molecule
+                    d = dist_molecule_surface(slab, first_layer, molecule_check)
+
+                    if d > 0.9:
+
+                        return molecule_check
 
         if hybridization == 'sp3': # the angle between slab_atom - mol_index - near_atom should be 110 degrees
 
@@ -1098,13 +1174,19 @@ def check_hybridization(slab, first_layer, norm_vector, molecule, mol_index, hyb
 
                 y_rotate = np.matmul(rotation_matrix_z_norm, y_origin)
 
+                # start rotation
+
                 molecule_original = copy.deepcopy(molecule) # original molecule
 
-                bond_y = np.linalg.norm(vector_molIndex_nearAtom) * np.cos(np.radians(70))
+                for atom in molecule_original:
 
-                bond_x = np.linalg.norm(vector_molIndex_nearAtom) * np.sin(np.radians(70))
+                    atom.position -= molecule[mol_index].position # let mol_index be (0, 0, 0)
 
-                # start rotation
+                    print(atom.symbol, atom.position)
+
+                bond_y = np.linalg.norm(vector_molIndex_nearAtom) * np.cos(np.radians(60))
+
+                bond_x = np.linalg.norm(vector_molIndex_nearAtom) * np.sin(np.radians(60))
 
                 for theta in range(0, 360, 5):
 
@@ -1112,43 +1194,56 @@ def check_hybridization(slab, first_layer, norm_vector, molecule, mol_index, hyb
                     rad = np.radians(theta)
 
                     # copy molecule to its original point
-                    molecule = copy.deepcopy(molecule_original)
+                    molecule_check = copy.deepcopy(molecule_original)
 
-                    coord_near_atom_sp3 = bond_y * norm_vector + bond_x * np.cos(rad) * x_rotate + bond_y * np.sin(rad) * y_rotate
+                    coord_near_atom_sp2 =  bond_y * norm_vector + bond_x * np.cos(rad) * x_rotate + bond_x * np.sin(rad) * y_rotate
 
-                    new_vector_molIndex_nearAtom = coord_near_atom_sp3 - coord_mol_index
+                    new_vector_molIndex_nearAtom = coord_near_atom_sp2
 
                     # rotate the original vector to the new vector
                     rotation_matrix_origin_new = rotation_matrix_from_vectors(vector_molIndex_nearAtom, new_vector_molIndex_nearAtom)
 
                     # rotate every atom in the molecule
-                    for atom in molecule:
+                    for atom in molecule_check:
 
                         if atom.index != mol_index:
 
                             atom.position = np.matmul(rotation_matrix_origin_new, atom.position)
 
-                        d = dist_molecule_surface(slab, first_layer, molecule)
+                    for atom in molecule_check:
 
-                        if d > 0.9:
+                        atom.position += molecule[mol_index].position
 
-                            return molecule
+                    d = dist_molecule_surface(slab, first_layer, molecule_check)
+
+                    if d > 0.9:
+
+                        return molecule_check
 
     else:
         return molecule
 
-def align_adsorbate_one_atom(slab, first_layer, norm_vector, molecule, mol_index, hybridization):
+def align_adsorbate_one_atom(slab, first_layer, site, norm_vector, label, molecule, mol_index, hybridization):
 
     """
-    This function can align the molecule through norm_vector.
+    This function can align the molecule on particular site through norm_vector.
 
     Parameter:
 
     slab:
         Atoms Object. The slab that we want to study. It has to be the pure-surface.
 
+    first_layer:
+        List of integers. the index of atoms in first layer of slab.
+
+    site:
+        Numpy Array (3x1). The location of adsorption site.
+
     norm_vector:
         Numpy Array (3x1). The norm_vector of the adsorption site ('ontop', 'bridge', 'hollow', 'four_fold')
+
+    label:
+        String. The index of atoms that construct the adsorption site
 
     molecule:
         Atoms Object. The adsorbate
@@ -1168,6 +1263,24 @@ def align_adsorbate_one_atom(slab, first_layer, norm_vector, molecule, mol_index
 
     num_near_atoms = len(index_near_atoms)
 
+    height = 100 # find the lowest point
+
+    for site_string in label:
+
+        site_ensemble = site_string.split('.')
+
+        for atom_index in site_ensemble:
+
+            atom = slab[int(atom_index)]
+
+            if atom.position[2] < height:
+
+                height = atom.position[2]
+
+                lowest_index = int(atom_index)
+
+    site_lowest_surface_atom = slab[lowest_index].position # get the lowest point
+
     # if there is one near atoms, then we should align it with the norm_vector
     if num_near_atoms == 1:
 
@@ -1183,14 +1296,30 @@ def align_adsorbate_one_atom(slab, first_layer, norm_vector, molecule, mol_index
 
         for atom in molecule:
 
-            if not (atom.index == mol_index):
-
                 atom.position = np.matmul(rotation_matrix, atom.position)
+
+        move_vector = site - molecule[mol_index].position # move all atoms to the adsorption site
+
+        for atom in molecule:
+
+            atom.position += move_vector
 
         # check whether molecule is OK for the hybridization
         molecule = check_hybridization(slab, first_layer, norm_vector, molecule, mol_index, hybridization)
 
-        return molecule
+        if check_above(site_lowest_surface_atom, molecule):
+
+            return molecule
+
+        else:
+
+            for atom in molecule:
+
+                if atom.index != mol_index:
+
+                    atom.position = atom.position + 2 * np.dot(molecule[mol_index].position - atom.position, norm_vector) / (np.power(np.linalg.norm(norm_vector),2)) * norm_vector
+
+            return molecule
 
     # if there are two near atoms, then we should align the middle point with the norm_vector
     if num_near_atoms == 2:
@@ -1218,11 +1347,29 @@ def align_adsorbate_one_atom(slab, first_layer, norm_vector, molecule, mol_index
         # rotate all atoms
         for atom in molecule:
 
-            if not (atom.index == mol_index):
-
                 atom.position = np.matmul(rotation_matrix, atom.position)
 
-        return molecule
+        # move all atoms
+
+        move_vector = site - molecule[mol_index].position # move all atoms to the adsorption site
+
+        for atom in molecule:
+
+            atom.position += move_vector
+
+        if check_above(site_lowest_surface_atom, molecule):
+
+            return molecule
+
+        else:
+
+            for atom in molecule:
+
+                if atom.index != mol_index:
+
+                    atom.position = atom.position + 2 * np.dot(molecule[mol_index].position - atom.position, norm_vector) / (np.power(np.linalg.norm(norm_vector),2)) * norm_vector
+
+            return molecule
 
     # if there are three near atoms, then we should align the center point with the norm_vector
     if num_near_atoms == 3:
@@ -1252,11 +1399,35 @@ def align_adsorbate_one_atom(slab, first_layer, norm_vector, molecule, mol_index
         # rotate all atoms
         for atom in molecule:
 
-            if not (atom.index == mol_index):
-
                 atom.position = np.matmul(rotation_matrix, atom.position)
 
-        return molecule
+        for atom in molecule:
+
+            print(atom.symbol, atom.position)
+
+        # move all atoms
+
+        move_vector = site - molecule[mol_index].position # move all atoms to the adsorption site
+
+        for atom in molecule:
+
+            atom.position += move_vector
+
+        if check_above(site_lowest_surface_atom, molecule):
+
+            return molecule
+
+        else:
+
+            for atom in molecule:
+
+                if atom.index != mol_index:
+
+                    atom.position = atom.position + 2 * np.dot(molecule[mol_index].position - atom.position, norm_vector) / (np.power(np.linalg.norm(norm_vector),2)) * norm_vector
+
+                    print(2 * np.dot(molecule[mol_index].position - atom.position, norm_vector) / (np.power(np.linalg.norm(norm_vector),2)) * norm_vector)
+
+            return molecule
 
     # if there are four near atoms, then we should align the center point with the norm_vector
     if num_near_atoms == 4:
@@ -1288,11 +1459,29 @@ def align_adsorbate_one_atom(slab, first_layer, norm_vector, molecule, mol_index
         # rotate all atoms
         for atom in molecule:
 
-            if not (atom.index == mol_index):
-
                 atom.position = np.matmul(rotation_matrix, atom.position)
 
-        return molecule
+        # move all atoms
+
+        move_vector = site - molecule[mol_index].position # move all atoms to the adsorption site
+
+        for atom in molecule:
+
+            atom.position += move_vector
+
+        if check_above(site_lowest_surface_atom, molecule):
+
+            return molecule
+
+        else:
+
+            for atom in molecule:
+
+                if atom.index != mol_index:
+
+                    atom.position = atom.position + 2 * np.dot(molecule[mol_index].position - atom.position, norm_vector) / (np.power(np.linalg.norm(norm_vector),2)) * norm_vector
+
+            return molecule
 
 ############################## Sample codes ##############################
 

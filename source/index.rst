@@ -20,61 +20,55 @@ Here is an example of the code:
 
 .. code-block:: Python
 
-    # test
+    # This tutorial works on Cu surfaces.
+    # If you want to use other surfaces. Please change the d_Cu
 
-    from surfgen.surfgen import slab_generator, surf_atom_finder, connection_matrix, find_all_ads_sites
-    from ase.visualize import view
-    from ase.build import bulk, molecule
-    from ase.constraints import FixAtoms
+    lc_Cu = 3.579 # lattice parameter of Cu bulk
+    d_Cu = lc_Cu / np.sqrt(2) # closest distance between two Cu atoms
 
-    Cu_bulk = bulk('Cu', 'fcc', 3.579)
+    Cu_bulk = bulk('Cu', 'fcc', lc_Cu)
+    mol = molecule('OH')
+    mol_index = 0
 
-    slab = slab_generator(Cu_bulk, (1, 0, 0), 4, 18.0, (2, 2, 1))
+    # check slab_generator function --- check OK!
+    slab_list = slab_generator(bulk=Cu_bulk, miller_index=(1, 1, 1), slab_height=8.0, vacuum=18.0, supercell=(3, 3, 1))
+    slab = slab_list[0]
+    # for slab in slab_list:
+    #     view(slab)
 
-    bond_length = 2.53 # only for Cu, it can also be in a range
+    # check surf_atom_finder --- check OK!
+    surf_atoms = surf_atom_finder(slab)
+    # c = FixAtoms(indices = [atom.index for atom in slab if atom.index in surf_atoms])
+    # slab.set_constraint(c)
+    # view(slab)
+    # print(surf_atoms)
 
-    H = molecule('H')
-    O = molecule('O')
-    N = molecule('N')
-    Cl = molecule('Cl')
-
-    slab_trial = slab[0]
-
-    surf_atoms = surf_atom_finder(slab_trial)
-
-    # set constraints, and fix atoms
-    c = FixAtoms([atom.index for atom in slab_trial if atom.index in surf_atoms])
-    slab_trial.set_constraint(c)
-
-    connector, conn_coordinates, outer_atom_index = connection_matrix(slab_trial, surf_atoms, bond_length)
-
+    # check connection_matrix --- check OK!
+    connector, conn_coordinates, outer_atom_index = connection_matrix(slab, surf_atoms, d_Cu)
+    # print('The connector matrix is:')
     # print(connector)
+    # print('The conn_coordinates is:')
     # print(conn_coordinates)
+    # print('The outer_atom_index is:')
+    # print(outer_atom_index)
 
-    ads_sites = find_all_ads_sites(slab_trial, connector, conn_coordinates, surf_atoms, bond_length)
+    # check find_all_ads_sites --- check OK!
+    ads_sites = find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, d_Cu)
+    # for site in ads_sites:
+    #     site_dict = ads_sites[site]
+    #     for index in site_dict:
+    #         print('{} for {} is:'.format(index, site))
+    #         print(site_dict[index])
 
-    for site in ads_sites:
-        print('{} site has {} possible positions'.format(site, len(ads_sites[site])))
-        for coord in ads_sites[site]:
-            print('The location is: {}'.format(coord))
+    site = ads_sites['ontop']['location'][1]
+    norm_vector = ads_sites['ontop']['norm_vector'][1]
+    label = ads_sites['ontop']['label'][1]
 
-    for site in ads_sites['ontop']:
-        O.set_positions([[site[0], site[1], site[2]]])
-        slab_trial += O
+    # check align_adsorbate_one_atom --- check OK!
+    mol = align_adsorbate_one_atom(slab, surf_atoms, site, norm_vector, label, mol, mol_index, 'sp3')
 
-    for site in ads_sites['bridge']:
-        H.set_positions([[site[0], site[1], site[2]]])
-        slab_trial += H
-
-    for site in ads_sites['hollow']:
-        N.set_positions([[site[0], site[1], site[2]]])
-        slab_trial += N
-
-    for site in ads_sites['four_fold']:
-        Cl.set_positions([[site[0], site[1], site[2]]])
-        slab_trial += Cl
-
-    view(slab_trial)
+    slab += mol
+    view(slab)
 
 .. toctree::
    :maxdepth: 2
