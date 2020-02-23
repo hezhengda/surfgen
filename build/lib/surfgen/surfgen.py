@@ -875,7 +875,7 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
     return ads_sites
 
-def find_connection_atoms(molecule, mol_index):
+def find_connection_atoms(molecule, mol_index, distance_range = [0.5, 1.8]):
 
     """
     This function can find all the closest atoms respect to the adsorbed atom. We only need to use this function when **we only have one adsorbed atom**. If there are more than one adsorbed atoms, then we only need to find the furthest atom.
@@ -887,6 +887,9 @@ def find_connection_atoms(molecule, mol_index):
 
     mol_index:
         Integer. The index of the adsorbed atom of molecules
+
+    distange_range:
+        List of Reals. Define the shortest and longest bond length in the molecule. Default is 0.5->1.8. [a,b]: a < b needed.
 
     Return:
 
@@ -905,7 +908,7 @@ def find_connection_atoms(molecule, mol_index):
 
             d = np.linalg.norm(coord_atom - coord_mol_index)
 
-            if (d > 0.5) and (d < 2.0): # 0.5A - 2.0A is our first guess, could be larger, need to be validated.
+            if (d > distance_range[0]) and (d < distance_range[1]): # 0.5A - 2.0A is our first guess, could be larger, need to be validated.
 
                 list_return.append(atom.index)
 
