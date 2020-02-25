@@ -1886,16 +1886,16 @@ def align_adsorbate_multiple_atoms(slab, first_layer, molecule, match_dict):
 
         Data Structure of match_dict:
 
-        {
-            '0': {
-                'location': location,
-                'norm_vector': norm_vector
-            },
-            '1': {
-                'location': location,
-                'norm_vector': norm_vector
+            {
+                '0': {
+                    'location': location,
+                    'norm_vector': norm_vector
+                },
+                '1': {
+                    'location': location,
+                    'norm_vector': norm_vector
+                }
             }
-        }
 
     Return:
 
