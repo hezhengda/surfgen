@@ -16,6 +16,6 @@ surfgen
        * .. function:: surf_atom_finder(slab, upper_lower = 'upper')
             :module: surfgen.surfgen
 
-            This function is used to get the surface atom
+            This function is used to get the surface atom  
 
    surfgen
