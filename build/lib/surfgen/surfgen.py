@@ -725,7 +725,7 @@ def find_all_ads_sites(slab, connector, conn_coordinates, surf_atoms, bond_lengt
 
                                 ads_sites['four_fold']['norm_vector'].append(norm_vector)
 
-                                ads_sites['four_fold']['label'].append(str(tmp[0]) + '.' + str(tmp[1]) + '.' + str(tmp[2]) + '.' + str([tmp[3]]))
+                                ads_sites['four_fold']['label'].append(str(tmp[0]) + '.' + str(tmp[1]) + '.' + str(tmp[2]) + '.' + str(tmp[3]))
 
                                 four_fold_site_ensemble.append(name_four_fold)
 

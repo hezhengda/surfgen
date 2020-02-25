@@ -1,7 +1,13 @@
 History of the Version of surfgen
 ===========================
 
+**25/02/2020**
+
+* 0.2.0: Add functionality which can put multi-adsorption molecules on the surface. Reach a milestone.
+
 **23/02/2020**
+
+* 0.1.8: Stable version.
 
 * 0.1.5: Found a mistake in the function find_connection_atoms. The range of bond length needs to be checked forehand.
 
