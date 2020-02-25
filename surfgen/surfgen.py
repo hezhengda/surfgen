@@ -368,6 +368,145 @@ def connection_matrix(slab, surface_atoms, bond_length):
 
     return connector, conn_coordinates, outer_atom_index
 
+def get_coordination_number(slab, surface_atoms, bond_length):
+
+    """
+    This function can help us determine the coordination number of the top layer of the surface.
+
+    Parameters:
+
+    slab:
+        The slab that we need
+
+    surface_atoms:
+        all the indexes of atoms on the surface
+
+    Return:
+        A dictionary. {atom_index: coordination_number}
+    """
+
+    # get the cell vector
+    v1_sc = slab.get_cell()[0]
+
+    v2_sc = slab.get_cell()[1]
+
+    # get all atoms in first layer
+    first_layer = []
+
+    for atom in slab:
+
+        if atom.index in surface_atoms:
+
+            first_layer.append(atom)
+
+    # create the periodic repetition of the first layer
+    outer_layer = []
+
+    movement_vector = []
+
+    index_multiplier = {'[-1, 0]': 1,
+                        '[1, 0]': 2,
+                        '[0, -1]': 3,
+                        '[0, 1]': 4,
+                        '[-1, -1]': 5,
+                        '[1, -1]': 6,
+                        '[1, 1]': 7,
+                        '[-1, 1]': 8}
+
+    outer_atom_index = []
+
+    for atom in slab:
+
+        outer_layer.append(atom.position + (-1)*v1_sc + (0)*v2_sc) # (-1,0)
+
+        movement_vector.append([-1, 0])
+
+        outer_atom_index.append(atom.index + len(slab)*index_multiplier['[-1, 0]'])
+
+        outer_layer.append(atom.position + (1)*v1_sc + (0)*v2_sc) # (1,0)
+
+        movement_vector.append([1, 0])
+
+        outer_atom_index.append(atom.index + len(slab)*index_multiplier['[1, 0]'])
+
+        outer_layer.append(atom.position + (0)*v1_sc + (-1)*v2_sc) # (0, -1)
+
+        movement_vector.append([0, -1])
+
+        outer_atom_index.append(atom.index + len(slab)*index_multiplier['[0, -1]'])
+
+        outer_layer.append(atom.position + (0)*v1_sc + (1)*v2_sc) # (0, 1)
+
+        movement_vector.append([0, 1])
+
+        outer_atom_index.append(atom.index + len(slab)*index_multiplier['[0, 1]'])
+
+        outer_layer.append(atom.position + (-1)*v1_sc + (-1)*v2_sc) # (-1, -1)
+
+        movement_vector.append([-1, -1])
+
+        outer_atom_index.append(atom.index + len(slab)*index_multiplier['[-1, -1]'])
+
+        outer_layer.append(atom.position + (1)*v1_sc + (-1)*v2_sc) # (1, -1)
+
+        movement_vector.append([1, -1])
+
+        outer_atom_index.append(atom.index + len(slab)*index_multiplier['[1, -1]'])
+
+        outer_layer.append(atom.position + (1)*v1_sc + (1)*v2_sc) # (1, 1)
+
+        movement_vector.append([1, 1])
+
+        outer_atom_index.append(atom.index + len(slab)*index_multiplier['[1, 1]'])
+
+        outer_layer.append(atom.position + (-1)*v1_sc + (1)*v2_sc) # (-1, 1)
+
+        movement_vector.append([-1, 1])
+
+        outer_atom_index.append(atom.index + len(slab)*index_multiplier['[-1, 1]'])
+
+    # construct the connection network
+    connector = {}
+
+    conn_coordinates = {}
+
+    coord_number_top_layer = {}
+
+    for atom1 in first_layer:
+
+        connector[str(atom1.index)] = []
+
+        conn_coordinates[str(atom1.index)] = []
+
+        for atom2 in slab:
+
+            if (atom1.index != atom2.index):
+
+                distance = np.linalg.norm(atom1.position - atom2.position)
+
+                if abs(distance - bond_length) < 0.01:
+
+                    connector[str(atom1.index)].append(atom2.index)
+
+                    conn_coordinates[str(atom1.index)].append(atom2.position)
+
+                # check the distance between atom1 and outer_layer
+        for item, atom2 in enumerate(outer_layer):
+
+            distance = np.linalg.norm(atom1.position - atom2)
+
+            if abs(distance - bond_length) < 0.01:
+
+                connector[str(atom1.index)].append(outer_atom_index[item])
+
+                conn_coordinates[str(atom1.index)].append(atom2)
+
+    for atom in first_layer:
+
+        coord_number_top_layer[str(atom.index)] = len(connector[str(atom.index)])
+
+    return coord_number_top_layer
+
 def check_hollow(v1, v2, v3):
 
     """
@@ -1272,13 +1411,13 @@ def align_adsorbate_one_atom(slab, first_layer, site, norm_vector, label, molecu
 
         for atom_index in site_ensemble:
 
-            atom = slab[int(atom_index)]
+            atom = slab[int(float(atom_index))]
 
             if atom.position[2] < height:
 
                 height = atom.position[2]
 
-                lowest_index = int(atom_index)
+                lowest_index = int(float(atom_index))
 
     site_lowest_surface_atom = slab[lowest_index].position # get the lowest point
 
