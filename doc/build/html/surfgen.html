@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Surfgen Module &mdash; surfgen 0.2.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/my_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Modules" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> surfgen
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Surfgen Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-surfgen.core">surfgen.core module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-surfgen.math">surfgen.math module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-surfgen.util">surfgen.util module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-surfgen">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">surfgen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">Modules</a> &raquo;</li>
+        
+      <li>Surfgen Module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/surfgen.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="surfgen-module">
+<h1>Surfgen Module<a class="headerlink" href="#surfgen-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-surfgen.core">
+<span id="surfgen-core-module"></span><h2>surfgen.core module<a class="headerlink" href="#module-surfgen.core" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="surfgen.core.align_adsorbate_multiple_atoms">
+<code class="sig-prename descclassname">surfgen.core.</code><code class="sig-name descname">align_adsorbate_multiple_atoms</code><span class="sig-paren">(</span><em class="sig-param">slab</em>, <em class="sig-param">first_layer</em>, <em class="sig-param">molecule</em>, <em class="sig-param">match_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/core.html#align_adsorbate_multiple_atoms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.core.align_adsorbate_multiple_atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can align adsorbate with multiple adsorption site on the surface with correct geometry.</p>
+<p>Parameter:</p>
+<dl>
+<dt>slab:</dt><dd><p>Atoms Object. The slab that we want to study. It has to be the pure-surface</p>
+</dd>
+<dt>first_layer:</dt><dd><p>List. Indexes of atoms on the first layer.</p>
+</dd>
+<dt>molecule:</dt><dd><p>Atoms Object. The adsorbate</p>
+</dd>
+<dt>match_dict:</dt><dd><p>Dictionary which contains the matching information between the molecule and the surface</p>
+<p>Data Structure of match_dict: match_dict = {‘0’: {‘location’: a, ‘norm_vector’: b}}</p>
+</dd>
+</dl>
+<p>Return:</p>
+<blockquote>
+<div><p>The Atoms object of the molecule that aligned with the norm_vector</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.core.align_adsorbate_one_atom">
+<code class="sig-prename descclassname">surfgen.core.</code><code class="sig-name descname">align_adsorbate_one_atom</code><span class="sig-paren">(</span><em class="sig-param">slab</em>, <em class="sig-param">first_layer</em>, <em class="sig-param">site</em>, <em class="sig-param">norm_vector</em>, <em class="sig-param">label</em>, <em class="sig-param">molecule</em>, <em class="sig-param">mol_index</em>, <em class="sig-param">hybridization</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/core.html#align_adsorbate_one_atom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.core.align_adsorbate_one_atom" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can align the molecule on particular site through norm_vector.</p>
+<p>Parameter:</p>
+<dl class="simple">
+<dt>slab:</dt><dd><p>Atoms Object. The slab that we want to study. It has to be the pure-surface.</p>
+</dd>
+<dt>first_layer:</dt><dd><p>List of integers. the index of atoms in first layer of slab.</p>
+</dd>
+<dt>site:</dt><dd><p>Numpy Array (3x1). The location of adsorption site.</p>
+</dd>
+<dt>norm_vector:</dt><dd><p>Numpy Array (3x1). The norm_vector of the adsorption site (‘ontop’, ‘bridge’, ‘hollow’, ‘four_fold’)</p>
+</dd>
+<dt>label:</dt><dd><p>List of Strings. The index of atoms that construct the adsorption site</p>
+</dd>
+<dt>molecule:</dt><dd><p>Atoms Object. The adsorbate</p>
+</dd>
+<dt>mol_index:</dt><dd><p>Integer. The index of adsorbed atoms</p>
+</dd>
+<dt>hybridization:</dt><dd><p>String. ‘sp’, ‘sp2’, ‘sp3’. Different hybridzation means different bond length.</p>
+</dd>
+</dl>
+<p>Return:</p>
+<blockquote>
+<div><p>The Atoms object of the molecule that aligned with the norm_vector</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.core.connection_matrix">
+<code class="sig-prename descclassname">surfgen.core.</code><code class="sig-name descname">connection_matrix</code><span class="sig-paren">(</span><em class="sig-param">slab</em>, <em class="sig-param">surface_atoms</em>, <em class="sig-param">bond_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/core.html#connection_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.core.connection_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can help us determine the connection matrix in the slab, and it will return two things:</p>
+<ol class="arabic simple">
+<li><p>The connection matrix (which contains the index information)</p></li>
+<li><p>All the coordinates (which contains all the information of coordinates)</p></li>
+</ol>
+<p>Parameters:</p>
+<dl>
+<dt>slab:</dt><dd><p>The slab that we need</p>
+</dd>
+<dt>surface_atoms:</dt><dd><p>all the indexes of atoms on the surface</p>
+</dd>
+<dt>Return:</dt><dd><p>Two dictionaries and one list.</p>
+<p>Two dictionaries are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>connector. It defines all the nearest neighbour of top surface layer atoms</p></li>
+<li><p>conn_coordinates. It defines all the coordinates of the atoms above</p></li>
+</ul>
+</div></blockquote>
+<p>One list is:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>outer_atom_index. It defines all the index of atoms on the outside of our slab.</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.core.find_all_ads_sites">
+<code class="sig-prename descclassname">surfgen.core.</code><code class="sig-name descname">find_all_ads_sites</code><span class="sig-paren">(</span><em class="sig-param">slab</em>, <em class="sig-param">connector</em>, <em class="sig-param">conn_coordinates</em>, <em class="sig-param">surf_atoms</em>, <em class="sig-param">bond_length</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/core.html#find_all_ads_sites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.core.find_all_ads_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can help us generate all possible adsorption sites on a surface.</p>
+<p>Parameters:</p>
+<dl>
+<dt>slab:</dt><dd><p>slab that we want to find adsorption sites</p>
+</dd>
+<dt>connector:</dt><dd><p>the connection matrix of all atoms on top layer</p>
+</dd>
+<dt>conn_coordiantes:</dt><dd><p>coordinates of all atoms on top layer and its related atoms</p>
+</dd>
+<dt>surf_atoms:</dt><dd><p>index of all atoms on top layer</p>
+</dd>
+<dt>bond_length:</dt><dd><p>for determining the bridge site</p>
+</dd>
+<dt>Return:</dt><dd><p>a dictionary which contains informations for ‘ontop’, ‘bridge’, ‘hollow’ and ‘four_fold’ sites</p>
+<p>There are three pieces of information:</p>
+<ul class="simple">
+<li><p>location: contains the location of adsorption sites</p></li>
+<li><p>norm_vector: contains the norm_vector for each adsorption sites</p></li>
+<li><p>label: contains the index of atoms that construct the adsorption sites</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.core.get_coordination_number">
+<code class="sig-prename descclassname">surfgen.core.</code><code class="sig-name descname">get_coordination_number</code><span class="sig-paren">(</span><em class="sig-param">connector</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/core.html#get_coordination_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.core.get_coordination_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can help us determine the coordination number of the top layer of the surface.</p>
+<p>Parameters:</p>
+<p>connector: the connector variable created by connection_matrix</p>
+<dl class="simple">
+<dt>Return:</dt><dd><p>A dictionary. {atom_index: coordination_number}</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.core.slab_generator">
+<code class="sig-prename descclassname">surfgen.core.</code><code class="sig-name descname">slab_generator</code><span class="sig-paren">(</span><em class="sig-param">bulk</em>, <em class="sig-param">miller_index</em>, <em class="sig-param">slab_height</em>, <em class="sig-param">vacuum</em>, <em class="sig-param">supercell</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/core.html#slab_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.core.slab_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can generate slab from the ASE bulk object</p>
+<p>Parameter:</p>
+<dl>
+<dt>bulk:</dt><dd><p>ASE Object. It is the bulk that we want to cut surface from</p>
+</dd>
+<dt>miller_index:</dt><dd><p>(3x1) tuple. It defines the miller index of the surface</p>
+</dd>
+<dt>slab_height:</dt><dd><p>Real (in Angstrom). It defines how large your surface slab should be on z-direction</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You need to try slab_height first to generate the desired slab that you want to have. A role of thumb is that usually 10.0 is large enough for the calculations.</p>
+</div>
+</dd>
+<dt>vacuum:</dt><dd><p>Real (in Angstrom). It defines the length of the vacuum layer</p>
+</dd>
+<dt>supercell:</dt><dd><p>(3x1) tuple or (3x3) np.array. It defines the supercell of our surface slab</p>
+<ul class="simple">
+<li><p>(3x3) np.array is quite useful in generating surface like sqrt(3)*sqrt(3)</p></li>
+</ul>
+</dd>
+<dt>Return:</dt><dd><p>Atoms object, which is the slab that we want</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.core.surf_atom_finder">
+<code class="sig-prename descclassname">surfgen.core.</code><code class="sig-name descname">surf_atom_finder</code><span class="sig-paren">(</span><em class="sig-param">slab</em>, <em class="sig-param">upper_lower='upper'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/core.html#surf_atom_finder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.core.surf_atom_finder" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to get the surface atom</p>
+<p>Parameters:</p>
+<dl>
+<dt>slab:</dt><dd><p>the surface slab that you want, it must be clean surface (without adsorption)</p>
+</dd>
+<dt>upper_lower:</dt><dd><p>string, to state whether you want the upper layer or lower layer or both.</p>
+<p>e.g. ‘upper’, ‘lower’, ‘both’. In default it is ‘upper’</p>
+<ul class="simple">
+<li><p>‘upper’: return indexes of atoms on upper surface layer</p></li>
+<li><p>‘lower’: return indexes of atoms on lower surface layer</p></li>
+<li><p>‘both’: return both of the surface layers</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-surfgen.math">
+<span id="surfgen-math-module"></span><h2>surfgen.math module<a class="headerlink" href="#module-surfgen.math" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="surfgen.math.matrix_multiple">
+<code class="sig-prename descclassname">surfgen.math.</code><code class="sig-name descname">matrix_multiple</code><span class="sig-paren">(</span><em class="sig-param">matrix_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/math.html#matrix_multiple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.math.matrix_multiple" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can help to return the multiplication of a series of matrixes.</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>matrix_list:</dt><dd><p>The list of matrix that we want to multiply</p>
+</dd>
+<dt>Return:</dt><dd><p>Numpy array. The result that we want</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.math.rotation_along_two_points">
+<code class="sig-prename descclassname">surfgen.math.</code><code class="sig-name descname">rotation_along_two_points</code><span class="sig-paren">(</span><em class="sig-param">p</em>, <em class="sig-param">p1</em>, <em class="sig-param">p2</em>, <em class="sig-param">theta</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/math.html#rotation_along_two_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.math.rotation_along_two_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can rotate a point (p) at an angle (theta) along a line generated by two point (p1, p2)</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>p:</dt><dd><p>Numpy Array (3x1). The point that we want to rotate</p>
+</dd>
+<dt>p1:</dt><dd><p>Numpy Array (3x1). First point of the line</p>
+</dd>
+<dt>p2:</dt><dd><p>Numpy Array (3x1). Second point of the line</p>
+</dd>
+<dt>theta:</dt><dd><p>Real. Angle that we want to rotate (0 - 360 degree)</p>
+</dd>
+<dt>Return:</dt><dd><p>Numpy Array (3x1). The point from rotation.</p>
+</dd>
+</dl>
+<p>Reference:</p>
+<blockquote>
+<div><p>The algorithm of this function is copied from two sources:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="https://robotics.stackexchange.com/questions/12782/how-rotate-a-point-around-an-arbitrary-line-in-3d">https://robotics.stackexchange.com/questions/12782/how-rotate-a-point-around-an-arbitrary-line-in-3d</a></p></li>
+<li><p><a class="reference external" href="http://paulbourke.net/geometry/rotate/">http://paulbourke.net/geometry/rotate/</a></p></li>
+</ol>
+<p>Many thanks to the authors</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.math.rotation_matrix_from_vectors">
+<code class="sig-prename descclassname">surfgen.math.</code><code class="sig-name descname">rotation_matrix_from_vectors</code><span class="sig-paren">(</span><em class="sig-param">vec1</em>, <em class="sig-param">vec2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/math.html#rotation_matrix_from_vectors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.math.rotation_matrix_from_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find the rotation matrix that aligns vec1 to vec2</p>
+<p>This function is taken from Peter’s answer on stackoverflow:
+<a class="reference external" href="https://stackoverflow.com/questions/45142959/calculate-rotation-matrix-to-align-two-vectors-in-3d-space">Question Link</a></p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>vec1:</dt><dd><p>Numpy array. A 3d “source” vector</p>
+</dd>
+<dt>vec2:</dt><dd><p>Numpy array. A 3d “destination” vector</p>
+</dd>
+<dt>Return:</dt><dd><p>A transform matrix (3x3) which when applied to vec1, aligns it with vec2.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-surfgen.util">
+<span id="surfgen-util-module"></span><h2>surfgen.util module<a class="headerlink" href="#module-surfgen.util" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="surfgen.util.average">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">average</code><span class="sig-paren">(</span><em class="sig-param">v</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#average"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.average" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can calculate the average of a list of vectors.</p>
+<p>Parameter:</p>
+<dl class="simple">
+<dt>v:</dt><dd><p>A list of (3x1) np.array. It contains several vectors</p>
+</dd>
+<dt>Return:</dt><dd><p>(3x1) tuple. The averaged vector.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.check_4fold">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">check_4fold</code><span class="sig-paren">(</span><em class="sig-param">v1</em>, <em class="sig-param">v2</em>, <em class="sig-param">v3</em>, <em class="sig-param">v4</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#check_4fold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.check_4fold" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is used to check whether the four atoms can form a square size or not</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>v1:</dt><dd><p>(3x1) np.array. Coordinates of the first point</p>
+</dd>
+<dt>v2:</dt><dd><p>(3x1) np.array. Coordinates of the second point</p>
+</dd>
+<dt>v3:</dt><dd><p>(3x1) np.array. Coordinates of the third point</p>
+</dd>
+<dt>v4:</dt><dd><p>(3x1) np.array. Coordinates of the fourth point</p>
+</dd>
+<dt>Return:</dt><dd><p>Boolean. True or False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.check_above">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">check_above</code><span class="sig-paren">(</span><em class="sig-param">site</em>, <em class="sig-param">molecule</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#check_above"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.check_above" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can check whether all atoms in molecule are above the adsorption site</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>site:</dt><dd><p>Numpy Array. The adsorption site that we want</p>
+</dd>
+<dt>molecule:</dt><dd><p>Atoms Object. The adsorbates.</p>
+</dd>
+<dt>Return:</dt><dd><p>Boolean. Shows whether the molecule is above the surface or not.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.check_distance">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">check_distance</code><span class="sig-paren">(</span><em class="sig-param">molecule</em>, <em class="sig-param">match_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#check_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.check_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can calculate the distance between the molecule and the adsorption sites.</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>molecule:</dt><dd><p>The molecule that we are interested in</p>
+</dd>
+<dt>match_dict:</dt><dd><p>The dictionary of the adsorbed information.</p>
+</dd>
+<dt>Return:</dt><dd><p>One real number. Shows the distance between molecule and adsorption sites.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.check_hollow">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">check_hollow</code><span class="sig-paren">(</span><em class="sig-param">v1</em>, <em class="sig-param">v2</em>, <em class="sig-param">v3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#check_hollow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.check_hollow" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can determine whether three points can form a 3-fold hollow site or not</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>v1:</dt><dd><p>(3x1) np.array. Coordinates of the first point</p>
+</dd>
+<dt>v2:</dt><dd><p>(3x1) np.array. Coordinates of the second point</p>
+</dd>
+<dt>v3:</dt><dd><p>(3x1) np.array. Coordinates of the third point</p>
+</dd>
+<dt>Return:</dt><dd><p>Boolean. True or False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.check_hybridization">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">check_hybridization</code><span class="sig-paren">(</span><em class="sig-param">slab</em>, <em class="sig-param">first_layer</em>, <em class="sig-param">norm_vector</em>, <em class="sig-param">molecule</em>, <em class="sig-param">mol_index</em>, <em class="sig-param">hybridization</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#check_hybridization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.check_hybridization" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can check whether the hybridization is confirmed or not</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>slab:</dt><dd><p>Atoms Object. The slab that we want to study. It has to be the pure-surface.</p>
+</dd>
+<dt>first_layer:</dt><dd><p>List of Integers. The indexes of first layer of slab.</p>
+</dd>
+<dt>molecule:</dt><dd><p>Atoms Object. The molecule that we are interested in</p>
+</dd>
+<dt>mol_index:</dt><dd><p>Integer. Index of adsorbed atom</p>
+</dd>
+<dt>hybridization:</dt><dd><p>String. ‘sp’, ‘sp2’, ‘sp3’</p>
+</dd>
+<dt>Return:</dt><dd><p>Atoms Object. With correct direction of hybridization</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.check_match">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">check_match</code><span class="sig-paren">(</span><em class="sig-param">molecule</em>, <em class="sig-param">match_dict</em>, <em class="sig-param">threshold=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#check_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.check_match" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can check whether the molecule and the adsorption site are matched</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>molecule:</dt><dd><p>The molecule that</p>
+</dd>
+<dt>match_dict:</dt><dd><p>Dictionary that contains the match information of molecule and the adsorption sites.</p>
+</dd>
+<dt>threshold:</dt><dd><p>Real number. It shows how large the mismatch can be. The default number is 0.8</p>
+</dd>
+<dt>Return:</dt><dd><p>Boolean. Check whether the molecule and the adsorption sites are matched.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.dist_molecule_surface">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">dist_molecule_surface</code><span class="sig-paren">(</span><em class="sig-param">slab</em>, <em class="sig-param">first_layer</em>, <em class="sig-param">molecule</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#dist_molecule_surface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.dist_molecule_surface" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can calculate the distance between the molecule and the slab</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>slab:</dt><dd><p>Atoms Object. The surface slab that we are interested in</p>
+</dd>
+<dt>first_layer:</dt><dd><p>List of integers. The indexes of the first layer of slab</p>
+</dd>
+<dt>molecule:</dt><dd><p>Atoms Object. The adsorbates that we want</p>
+</dd>
+<dt>Return:</dt><dd><p>shortest distance between the slab and the molecule</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.find_center_molecule_adsSites">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">find_center_molecule_adsSites</code><span class="sig-paren">(</span><em class="sig-param">molecule</em>, <em class="sig-param">match_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#find_center_molecule_adsSites"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.find_center_molecule_adsSites" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can help us find the center of molecule and the center of the adsorption sites</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>molecule:</dt><dd><p>Atoms Object. The molecules we are interested in.</p>
+</dd>
+<dt>match_dict:</dt><dd><p>The matching dictionary of the molecule and the adsorption site</p>
+</dd>
+<dt>Return:</dt><dd><p>Four Numpy Arraies (3x1). Contains:</p>
+<ul class="simple">
+<li><p>mol_center_location: the center of adsorbed atom in molecule</p></li>
+<li><p>mol_center_norm_vector_normalized: the averaged normalized norm vector of all adsorbed atom in molecule</p></li>
+<li><p>adsSite_center_location: the center of adsorption sites</p></li>
+<li><p>adsSites_center_norm_vector_normalized: the averaged normalized norm vector of all adsorption sites</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.find_connection_atoms">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">find_connection_atoms</code><span class="sig-paren">(</span><em class="sig-param">molecule, mol_index, distance_range=[0.5, 1.8]</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#find_connection_atoms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.find_connection_atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can find all the closest atoms respect to the adsorbed atom. We only need to use this function when <strong>we only have one adsorbed atom</strong>. If there are more than one adsorbed atoms, then we only need to find the furthest atom.</p>
+<p>Parameters:</p>
+<dl class="simple">
+<dt>molecule:</dt><dd><p>ASE Atoms Object. The molecule that we want to adsorb on the surface</p>
+</dd>
+<dt>mol_index:</dt><dd><p>Integer. The index of the adsorbed atom of molecules</p>
+</dd>
+<dt>distange_range:</dt><dd><p>List of Reals. Define the shortest and longest bond length in the molecule. Default is 0.5-&gt;1.8. [a,b]: a &lt; b needed.</p>
+</dd>
+<dt>Return:</dt><dd><p>The function will retun a list of indexes in the molecule.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="surfgen.util.find_keys">
+<code class="sig-prename descclassname">surfgen.util.</code><code class="sig-name descname">find_keys</code><span class="sig-paren">(</span><em class="sig-param">dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/surfgen/util.html#find_keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#surfgen.util.find_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function can find the keys for the dictionary</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>dict: The dictionary that we want the keys</p>
+</dd>
+<dt>Return:</dt><dd><p>List: list of keys in the dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-surfgen">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-surfgen" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="modules.html" class="btn btn-neutral float-left" title="Modules" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Zheng-Da He
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

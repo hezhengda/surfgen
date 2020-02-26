@@ -1,0 +1,833 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>surfgen.util &mdash; surfgen 0.2.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/my_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> surfgen
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../change_log.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../future_plan.html">Future Plan</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">surfgen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>surfgen.util</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for surfgen.util</h1><div class="highlight"><pre>
+<span></span><span class="c1"># python module</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># surfgen</span>
+<span class="kn">from</span> <span class="nn">surfgen.math</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1">############################## Here comes the Python code ##############################</span>
+<div class="viewcode-block" id="check_hollow"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.check_hollow">[docs]</a><span class="k">def</span> <span class="nf">check_hollow</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can determine whether three points can form a 3-fold hollow site or not</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    v1:</span>
+<span class="sd">        (3x1) np.array. Coordinates of the first point</span>
+
+<span class="sd">    v2:</span>
+<span class="sd">        (3x1) np.array. Coordinates of the second point</span>
+
+<span class="sd">    v3:</span>
+<span class="sd">        (3x1) np.array. Coordinates of the third point</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        Boolean. True or False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">d_12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v1</span><span class="o">-</span><span class="n">v2</span><span class="p">)</span>
+
+    <span class="n">d_23</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v2</span><span class="o">-</span><span class="n">v3</span><span class="p">)</span>
+
+    <span class="n">d_13</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v1</span><span class="o">-</span><span class="n">v3</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d_12</span> <span class="o">-</span> <span class="n">d_23</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mf">0.1</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d_12</span> <span class="o">-</span> <span class="n">d_13</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d_13</span> <span class="o">-</span> <span class="n">d_23</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="check_4fold"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.check_4fold">[docs]</a><span class="k">def</span> <span class="nf">check_4fold</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">v3</span><span class="p">,</span> <span class="n">v4</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function is used to check whether the four atoms can form a square size or not</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    v1:</span>
+<span class="sd">        (3x1) np.array. Coordinates of the first point</span>
+
+<span class="sd">    v2:</span>
+<span class="sd">        (3x1) np.array. Coordinates of the second point</span>
+
+<span class="sd">    v3:</span>
+<span class="sd">        (3x1) np.array. Coordinates of the third point</span>
+
+<span class="sd">    v4:</span>
+<span class="sd">        (3x1) np.array. Coordinates of the fourth point</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        Boolean. True or False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">d12</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v1</span> <span class="o">-</span> <span class="n">v2</span><span class="p">)</span> <span class="c1"># from p1 to p2</span>
+
+    <span class="n">d13</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v1</span> <span class="o">-</span> <span class="n">v3</span><span class="p">)</span> <span class="c1"># from p1 to p3</span>
+
+    <span class="n">d14</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v1</span> <span class="o">-</span> <span class="n">v4</span><span class="p">)</span> <span class="c1"># from p1 to p4</span>
+
+    <span class="n">d23</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v2</span> <span class="o">-</span> <span class="n">v3</span><span class="p">)</span> <span class="c1"># from p2 to p3</span>
+
+    <span class="n">d24</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v2</span> <span class="o">-</span> <span class="n">v4</span><span class="p">)</span> <span class="c1"># from p2 to p4</span>
+
+    <span class="n">d34</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v3</span> <span class="o">-</span> <span class="n">v4</span><span class="p">)</span> <span class="c1"># from p3 to p4</span>
+
+    <span class="c1"># if we choose any point then we set it to 1, then there are only three options in the other of diagnoal: 2, 3, 4.</span>
+    <span class="c1"># Let&#39;s see it is 4, then the other diagonal is 2-3. So now we have &quot;1-2&quot;, &quot;2-4&quot;, &quot;3-4&quot;, &quot;1-3&quot; as four sides, and we can check whether they have the same length.</span>
+    <span class="c1"># The condition is really important !!!</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d12</span> <span class="o">-</span> <span class="n">d13</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d13</span> <span class="o">-</span> <span class="n">d34</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d34</span> <span class="o">-</span> <span class="n">d24</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">d12</span> <span class="o">-</span> <span class="n">d14</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">d24</span> <span class="o">-</span> <span class="n">d23</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d13</span> <span class="o">-</span> <span class="n">d14</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d14</span> <span class="o">-</span> <span class="n">d24</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d23</span> <span class="o">-</span> <span class="n">d24</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">d13</span> <span class="o">-</span> <span class="n">d12</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">d23</span> <span class="o">-</span> <span class="n">d34</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d12</span> <span class="o">-</span> <span class="n">d14</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d12</span> <span class="o">-</span> <span class="n">d23</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d23</span> <span class="o">-</span> <span class="n">d34</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">d14</span> <span class="o">-</span> <span class="n">d13</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">d24</span> <span class="o">-</span> <span class="n">d23</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">):</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="average"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.average">[docs]</a><span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can calculate the average of a list of vectors.</span>
+
+<span class="sd">    Parameter:</span>
+
+<span class="sd">    v:</span>
+<span class="sd">        A list of (3x1) np.array. It contains several vectors</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        (3x1) tuple. The averaged vector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="n">tot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+
+                <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">tot</span> <span class="o">=</span> <span class="n">tot</span> <span class="o">+</span> <span class="n">i</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="n">tot</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">tot</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="n">tot</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">n</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="find_connection_atoms"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.find_connection_atoms">[docs]</a><span class="k">def</span> <span class="nf">find_connection_atoms</span><span class="p">(</span><span class="n">molecule</span><span class="p">,</span> <span class="n">mol_index</span><span class="p">,</span> <span class="n">distance_range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">]):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can find all the closest atoms respect to the adsorbed atom. We only need to use this function when **we only have one adsorbed atom**. If there are more than one adsorbed atoms, then we only need to find the furthest atom.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    molecule:</span>
+<span class="sd">        ASE Atoms Object. The molecule that we want to adsorb on the surface</span>
+
+<span class="sd">    mol_index:</span>
+<span class="sd">        Integer. The index of the adsorbed atom of molecules</span>
+
+<span class="sd">    distange_range:</span>
+<span class="sd">        List of Reals. Define the shortest and longest bond length in the molecule. Default is 0.5-&gt;1.8. [a,b]: a &lt; b needed.</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        The function will retun a list of indexes in the molecule.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">coord_mol_index</span> <span class="o">=</span> <span class="n">molecule</span><span class="p">[</span><span class="n">mol_index</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+
+    <span class="n">list_return</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">atom</span><span class="o">.</span><span class="n">index</span> <span class="o">!=</span> <span class="n">mol_index</span><span class="p">:</span>
+
+            <span class="n">coord_atom</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">position</span>
+
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">coord_atom</span> <span class="o">-</span> <span class="n">coord_mol_index</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">d</span> <span class="o">&gt;</span> <span class="n">distance_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">distance_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span> <span class="c1"># 0.5A - 2.0A is our first guess, could be larger, need to be validated.</span>
+
+                <span class="n">list_return</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">list_return</span></div>
+
+<div class="viewcode-block" id="check_above"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.check_above">[docs]</a><span class="k">def</span> <span class="nf">check_above</span><span class="p">(</span><span class="n">site</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can check whether all atoms in molecule are above the adsorption site</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    site:</span>
+<span class="sd">        Numpy Array. The adsorption site that we want</span>
+
+<span class="sd">    molecule:</span>
+<span class="sd">        Atoms Object. The adsorbates.</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        Boolean. Shows whether the molecule is above the surface or not.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">atom</span><span class="o">.</span><span class="n">position</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">site</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="dist_molecule_surface"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.dist_molecule_surface">[docs]</a><span class="k">def</span> <span class="nf">dist_molecule_surface</span><span class="p">(</span><span class="n">slab</span><span class="p">,</span> <span class="n">first_layer</span><span class="p">,</span> <span class="n">molecule</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can calculate the distance between the molecule and the slab</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    slab:</span>
+<span class="sd">        Atoms Object. The surface slab that we are interested in</span>
+
+<span class="sd">    first_layer:</span>
+<span class="sd">        List of integers. The indexes of the first layer of slab</span>
+
+<span class="sd">    molecule:</span>
+<span class="sd">        Atoms Object. The adsorbates that we want</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        shortest distance between the slab and the molecule</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">distance</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># really large number</span>
+
+    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule</span><span class="p">:</span>
+
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">first_layer</span><span class="p">:</span>
+
+            <span class="n">coord_atom_molecule</span> <span class="o">=</span> <span class="n">atom</span><span class="o">.</span><span class="n">position</span>
+
+            <span class="n">coord_surface_atom</span> <span class="o">=</span> <span class="n">slab</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">coord_atom_molecule</span> <span class="o">-</span> <span class="n">coord_surface_atom</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">distance</span><span class="p">):</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">d</span>
+
+    <span class="k">return</span> <span class="n">distance</span></div>
+
+<div class="viewcode-block" id="check_hybridization"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.check_hybridization">[docs]</a><span class="k">def</span> <span class="nf">check_hybridization</span><span class="p">(</span><span class="n">slab</span><span class="p">,</span> <span class="n">first_layer</span><span class="p">,</span> <span class="n">norm_vector</span><span class="p">,</span> <span class="n">molecule</span><span class="p">,</span> <span class="n">mol_index</span><span class="p">,</span> <span class="n">hybridization</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can check whether the hybridization is confirmed or not</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    slab:</span>
+<span class="sd">        Atoms Object. The slab that we want to study. It has to be the pure-surface.</span>
+
+<span class="sd">    first_layer:</span>
+<span class="sd">        List of Integers. The indexes of first layer of slab.</span>
+
+<span class="sd">    molecule:</span>
+<span class="sd">        Atoms Object. The molecule that we are interested in</span>
+
+<span class="sd">    mol_index:</span>
+<span class="sd">        Integer. Index of adsorbed atom</span>
+
+<span class="sd">    hybridization:</span>
+<span class="sd">        String. &#39;sp&#39;, &#39;sp2&#39;, &#39;sp3&#39;</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        Atoms Object. With correct direction of hybridization</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">num_near_atoms</span> <span class="o">=</span> <span class="n">find_connection_atoms</span><span class="p">(</span><span class="n">molecule</span><span class="p">,</span> <span class="n">mol_index</span><span class="p">)</span>
+
+    <span class="c1"># We only need to adjust the hybridzation of molecule like &quot;OH, OCH3&quot;, etc.</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">num_near_atoms</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+
+        <span class="n">coord_mol_index</span> <span class="o">=</span> <span class="n">molecule</span><span class="p">[</span><span class="n">mol_index</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+
+        <span class="n">coord_near_atom</span> <span class="o">=</span> <span class="n">molecule</span><span class="p">[</span><span class="n">num_near_atoms</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">position</span>
+
+        <span class="n">vector_molIndex_nearAtom</span> <span class="o">=</span> <span class="n">coord_near_atom</span> <span class="o">-</span> <span class="n">coord_mol_index</span>
+
+        <span class="n">cos_two_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">,</span> <span class="o">-</span><span class="n">norm_vector</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">norm_vector</span><span class="p">))</span> <span class="c1"># -&gt; cosine of the angle</span>
+
+        <span class="c1"># sometimes cos_two_vector can be larger than 1 (very exceptional case), we need to do something</span>
+        <span class="k">if</span> <span class="n">cos_two_vector</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+
+            <span class="n">cos_two_vector</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">cos_two_vector</span>
+
+        <span class="k">elif</span> <span class="n">cos_two_vector</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+
+            <span class="n">cos_two_vector</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">-</span> <span class="n">cos_two_vector</span>
+
+        <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">cos_two_vector</span><span class="p">)</span> <span class="c1"># if you really want the angle</span>
+
+        <span class="n">angle_degree</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+
+        <span class="c1"># prevent too large angles</span>
+        <span class="k">if</span> <span class="n">angle_degree</span> <span class="o">&gt;</span> <span class="mi">180</span><span class="p">:</span>
+
+            <span class="n">angle_degree</span> <span class="o">-=</span> <span class="mi">180</span>
+
+        <span class="c1"># check &#39;sp&#39;, &#39;sp2&#39;, &#39;sp3&#39;</span>
+
+        <span class="k">if</span> <span class="n">hybridization</span> <span class="o">==</span> <span class="s1">&#39;sp&#39;</span><span class="p">:</span> <span class="c1"># the angle between slab_atom - mol_index - near_atom should be 180 degrees</span>
+
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">angle_degree</span> <span class="o">-</span> <span class="mi">180</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+
+                <span class="k">return</span> <span class="n">molecule</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">norm_vector_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">)</span> <span class="o">*</span> <span class="n">norm_vector</span>
+
+                <span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">rotation_matrix_from_vectors</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">,</span> <span class="n">norm_vector_length</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule</span><span class="p">:</span>
+
+                    <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">atom</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">mol_index</span><span class="p">):</span>
+
+                        <span class="n">atom</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">molecule</span>
+
+        <span class="k">if</span> <span class="n">hybridization</span> <span class="o">==</span> <span class="s1">&#39;sp2&#39;</span><span class="p">:</span> <span class="c1"># the angle between slab_atom - mol_index - near_atom should be 120 degrees</span>
+
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">angle_degree</span> <span class="o">-</span> <span class="mi">120</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+
+                <span class="k">return</span> <span class="n">molecule</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="c1"># Create localized coordinate system for the norm_vector</span>
+
+                <span class="n">x_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+                <span class="n">y_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+                <span class="n">z_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+                <span class="n">rotation_matrix_z_norm</span> <span class="o">=</span> <span class="n">rotation_matrix_from_vectors</span><span class="p">(</span><span class="n">z_origin</span><span class="p">,</span> <span class="n">norm_vector</span><span class="p">)</span>
+
+                <span class="n">x_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rotation_matrix_z_norm</span><span class="p">,</span> <span class="n">x_origin</span><span class="p">)</span>
+
+                <span class="n">y_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rotation_matrix_z_norm</span><span class="p">,</span> <span class="n">y_origin</span><span class="p">)</span>
+
+                <span class="c1"># start rotation</span>
+
+                <span class="n">molecule_original</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span> <span class="c1"># original molecule</span>
+
+                <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule_original</span><span class="p">:</span>
+
+                    <span class="n">atom</span><span class="o">.</span><span class="n">position</span> <span class="o">-=</span> <span class="n">molecule</span><span class="p">[</span><span class="n">mol_index</span><span class="p">]</span><span class="o">.</span><span class="n">position</span> <span class="c1"># let mol_index be (0, 0, 0)</span>
+
+                <span class="n">bond_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>
+
+                <span class="n">bond_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+
+                    <span class="c1"># turn angle to radius</span>
+                    <span class="n">rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+                    <span class="c1"># copy molecule to its original point</span>
+                    <span class="n">molecule_check</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">molecule_original</span><span class="p">)</span>
+
+                    <span class="n">coord_near_atom_sp2</span> <span class="o">=</span>  <span class="n">bond_y</span> <span class="o">*</span> <span class="n">norm_vector</span> <span class="o">+</span> <span class="n">bond_x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">x_rotate</span> <span class="o">+</span> <span class="n">bond_x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_rotate</span>
+
+                    <span class="n">new_vector_molIndex_nearAtom</span> <span class="o">=</span> <span class="n">coord_near_atom_sp2</span>
+
+                    <span class="c1"># rotate the original vector to the new vector</span>
+                    <span class="n">rotation_matrix_origin_new</span> <span class="o">=</span> <span class="n">rotation_matrix_from_vectors</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">,</span> <span class="n">new_vector_molIndex_nearAtom</span><span class="p">)</span>
+
+                    <span class="c1"># rotate every atom in the molecule</span>
+                    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule_check</span><span class="p">:</span>
+
+                        <span class="k">if</span> <span class="n">atom</span><span class="o">.</span><span class="n">index</span> <span class="o">!=</span> <span class="n">mol_index</span><span class="p">:</span>
+
+                            <span class="n">atom</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rotation_matrix_origin_new</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+
+                    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule_check</span><span class="p">:</span>
+
+                        <span class="n">atom</span><span class="o">.</span><span class="n">position</span> <span class="o">+=</span> <span class="n">molecule</span><span class="p">[</span><span class="n">mol_index</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+
+                    <span class="n">d</span> <span class="o">=</span> <span class="n">dist_molecule_surface</span><span class="p">(</span><span class="n">slab</span><span class="p">,</span> <span class="n">first_layer</span><span class="p">,</span> <span class="n">molecule_check</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
+
+                        <span class="k">return</span> <span class="n">molecule_check</span>
+
+        <span class="k">if</span> <span class="n">hybridization</span> <span class="o">==</span> <span class="s1">&#39;sp3&#39;</span><span class="p">:</span> <span class="c1"># the angle between slab_atom - mol_index - near_atom should be 110 degrees</span>
+
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">angle_degree</span> <span class="o">-</span> <span class="mi">110</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+
+                <span class="k">return</span> <span class="n">molecule</span>
+
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="c1"># Create localized coordinate system for the norm_vector</span>
+
+                <span class="n">x_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+                <span class="n">y_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+                <span class="n">z_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+                <span class="n">rotation_matrix_z_norm</span> <span class="o">=</span> <span class="n">rotation_matrix_from_vectors</span><span class="p">(</span><span class="n">z_origin</span><span class="p">,</span> <span class="n">norm_vector</span><span class="p">)</span>
+
+                <span class="n">x_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rotation_matrix_z_norm</span><span class="p">,</span> <span class="n">x_origin</span><span class="p">)</span>
+
+                <span class="n">y_rotate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rotation_matrix_z_norm</span><span class="p">,</span> <span class="n">y_origin</span><span class="p">)</span>
+
+                <span class="c1"># start rotation</span>
+
+                <span class="n">molecule_original</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">molecule</span><span class="p">)</span> <span class="c1"># original molecule</span>
+
+                <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule_original</span><span class="p">:</span>
+
+                    <span class="n">atom</span><span class="o">.</span><span class="n">position</span> <span class="o">-=</span> <span class="n">molecule</span><span class="p">[</span><span class="n">mol_index</span><span class="p">]</span><span class="o">.</span><span class="n">position</span> <span class="c1"># let mol_index be (0, 0, 0)</span>
+
+                <span class="n">bond_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>
+
+                <span class="n">bond_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">theta</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+
+                    <span class="c1"># turn angle to radius</span>
+                    <span class="n">rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+                    <span class="c1"># copy molecule to its original point</span>
+                    <span class="n">molecule_check</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">molecule_original</span><span class="p">)</span>
+
+                    <span class="n">coord_near_atom_sp2</span> <span class="o">=</span>  <span class="n">bond_y</span> <span class="o">*</span> <span class="n">norm_vector</span> <span class="o">+</span> <span class="n">bond_x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">x_rotate</span> <span class="o">+</span> <span class="n">bond_x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_rotate</span>
+
+                    <span class="n">new_vector_molIndex_nearAtom</span> <span class="o">=</span> <span class="n">coord_near_atom_sp2</span>
+
+                    <span class="c1"># rotate the original vector to the new vector</span>
+                    <span class="n">rotation_matrix_origin_new</span> <span class="o">=</span> <span class="n">rotation_matrix_from_vectors</span><span class="p">(</span><span class="n">vector_molIndex_nearAtom</span><span class="p">,</span> <span class="n">new_vector_molIndex_nearAtom</span><span class="p">)</span>
+
+                    <span class="c1"># rotate every atom in the molecule</span>
+                    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule_check</span><span class="p">:</span>
+
+                        <span class="k">if</span> <span class="n">atom</span><span class="o">.</span><span class="n">index</span> <span class="o">!=</span> <span class="n">mol_index</span><span class="p">:</span>
+
+                            <span class="n">atom</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">rotation_matrix_origin_new</span><span class="p">,</span> <span class="n">atom</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+
+                    <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">molecule_check</span><span class="p">:</span>
+
+                        <span class="n">atom</span><span class="o">.</span><span class="n">position</span> <span class="o">+=</span> <span class="n">molecule</span><span class="p">[</span><span class="n">mol_index</span><span class="p">]</span><span class="o">.</span><span class="n">position</span>
+
+                    <span class="n">d</span> <span class="o">=</span> <span class="n">dist_molecule_surface</span><span class="p">(</span><span class="n">slab</span><span class="p">,</span> <span class="n">first_layer</span><span class="p">,</span> <span class="n">molecule_check</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="mf">0.9</span><span class="p">:</span>
+
+                        <span class="k">return</span> <span class="n">molecule_check</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">molecule</span></div>
+
+<div class="viewcode-block" id="check_match"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.check_match">[docs]</a><span class="k">def</span> <span class="nf">check_match</span><span class="p">(</span><span class="n">molecule</span><span class="p">,</span> <span class="n">match_dict</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can check whether the molecule and the adsorption site are matched</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    molecule:</span>
+<span class="sd">        The molecule that</span>
+
+<span class="sd">    match_dict:</span>
+<span class="sd">        Dictionary that contains the match information of molecule and the adsorption sites.</span>
+
+<span class="sd">    threshold:</span>
+<span class="sd">        Real number. It shows how large the mismatch can be. The default number is 0.8</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        Boolean. Check whether the molecule and the adsorption sites are matched.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">index1</span> <span class="ow">in</span> <span class="n">match_dict</span><span class="p">:</span>
+
+        <span class="k">for</span> <span class="n">index2</span> <span class="ow">in</span> <span class="n">match_dict</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">index1</span> <span class="o">!=</span> <span class="n">index2</span><span class="p">:</span>
+
+                <span class="n">coord_ads_site_1</span> <span class="o">=</span> <span class="n">match_dict</span><span class="p">[</span><span class="n">index1</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span>
+
+                <span class="n">coord_ads_site_2</span> <span class="o">=</span> <span class="n">match_dict</span><span class="p">[</span><span class="n">index2</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span>
+
+                <span class="n">coord_mol_index_1</span> <span class="o">=</span> <span class="n">molecule</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">index1</span><span class="p">))]</span><span class="o">.</span><span class="n">position</span>
+
+                <span class="n">coord_mol_index_2</span> <span class="o">=</span> <span class="n">molecule</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">index2</span><span class="p">))]</span><span class="o">.</span><span class="n">position</span>
+
+                <span class="n">d_ads_site</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">coord_ads_site_1</span> <span class="o">-</span> <span class="n">coord_ads_site_2</span><span class="p">)</span>
+
+                <span class="n">d_mol_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">coord_mol_index_1</span> <span class="o">-</span> <span class="n">coord_mol_index_2</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">d_ads_site</span> <span class="o">-</span> <span class="n">d_mol_index</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">:</span>
+
+                    <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="find_keys"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.find_keys">[docs]</a><span class="k">def</span> <span class="nf">find_keys</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can find the keys for the dictionary</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        dict: The dictionary that we want the keys</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        List: list of keys in the dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">set</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">dict</span><span class="p">:</span>
+
+        <span class="nb">set</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">set</span></div>
+
+<div class="viewcode-block" id="find_center_molecule_adsSites"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.find_center_molecule_adsSites">[docs]</a><span class="k">def</span> <span class="nf">find_center_molecule_adsSites</span><span class="p">(</span><span class="n">molecule</span><span class="p">,</span> <span class="n">match_dict</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can help us find the center of molecule and the center of the adsorption sites</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    molecule:</span>
+<span class="sd">        Atoms Object. The molecules we are interested in.</span>
+
+<span class="sd">    match_dict:</span>
+<span class="sd">        The matching dictionary of the molecule and the adsorption site</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        Four Numpy Arraies (3x1). Contains:</span>
+
+<span class="sd">        * mol_center_location: the center of adsorbed atom in molecule</span>
+
+<span class="sd">        * mol_center_norm_vector_normalized: the averaged normalized norm vector of all adsorbed atom in molecule</span>
+
+<span class="sd">        * adsSite_center_location: the center of adsorption sites</span>
+
+<span class="sd">        * adsSites_center_norm_vector_normalized: the averaged normalized norm vector of all adsorption sites</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">mol_coordinates_set</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># set of all adsorbed atom location</span>
+
+    <span class="n">mol_norm_vector</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># set of all norm vectors of atoms in molecule</span>
+
+    <span class="n">adsSites_coordinates_set</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># set of the location of all adsorption sites</span>
+
+    <span class="n">adsSites_norm_vector</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># set of the norm vectors of all adsorption sites</span>
+
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">match_dict</span><span class="p">:</span>
+
+        <span class="n">mol_coordinates_set</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">molecule</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">index</span><span class="p">))]</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+
+        <span class="n">adsSites_coordinates_set</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">match_dict</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">])</span>
+
+        <span class="n">adsSites_norm_vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">match_dict</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="s1">&#39;norm_vector&#39;</span><span class="p">])</span>
+
+    <span class="n">adsSite_center_location</span> <span class="o">=</span> <span class="n">average</span><span class="p">(</span><span class="n">adsSites_coordinates_set</span><span class="p">)</span> <span class="c1"># center of the location of adsorption sites</span>
+
+    <span class="n">adsSites_center_norm_vector</span> <span class="o">=</span> <span class="n">average</span><span class="p">(</span><span class="n">adsSites_norm_vector</span><span class="p">)</span> <span class="c1"># norm vector of the adsorption sites</span>
+
+    <span class="n">adsSites_center_norm_vector_normalized</span> <span class="o">=</span> <span class="n">adsSites_center_norm_vector</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">adsSites_center_norm_vector</span><span class="p">)</span>
+
+    <span class="n">mol_center_location</span> <span class="o">=</span> <span class="n">average</span><span class="p">(</span><span class="n">mol_coordinates_set</span><span class="p">)</span> <span class="c1"># center of the location of molecule</span>
+
+    <span class="k">for</span> <span class="n">index1</span><span class="p">,</span> <span class="n">site1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mol_coordinates_set</span><span class="p">):</span>
+
+        <span class="n">mol_norm_vector_tmp</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># used to calculate the norm_vector of index1</span>
+
+        <span class="n">check_duplicity</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># check the duplicity</span>
+
+        <span class="k">for</span> <span class="n">index2</span><span class="p">,</span> <span class="n">site2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mol_coordinates_set</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="n">index1</span> <span class="o">!=</span> <span class="n">index2</span><span class="p">:</span> <span class="c1"># if they are not the same atoms</span>
+
+                <span class="k">for</span> <span class="n">index3</span><span class="p">,</span> <span class="n">site3</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mol_coordinates_set</span><span class="p">):</span>
+
+                    <span class="k">if</span> <span class="p">(</span><span class="n">index3</span> <span class="o">!=</span> <span class="n">index1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">index3</span> <span class="o">!=</span> <span class="n">index2</span><span class="p">):</span> <span class="c1"># if index3 is not identical to both index1 and index2</span>
+
+                        <span class="c1"># check whether the norm_vector is stored or not</span>
+                        <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">index1</span><span class="p">,</span> <span class="n">index2</span><span class="p">,</span> <span class="n">index3</span><span class="p">]))</span>
+
+                        <span class="n">name_string</span> <span class="o">=</span> <span class="s1">&#39;1_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;-2_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;-3_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+                        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">name_string</span> <span class="ow">in</span> <span class="n">check_duplicity</span><span class="p">):</span> <span class="c1"># if the norm vector is not calculated</span>
+
+                            <span class="n">v1</span> <span class="o">=</span> <span class="n">site2</span> <span class="o">-</span> <span class="n">site1</span>
+
+                            <span class="n">v2</span> <span class="o">=</span> <span class="n">site3</span> <span class="o">-</span> <span class="n">site1</span>
+
+                            <span class="n">norm_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+
+                            <span class="n">norm_vector_normalized</span> <span class="o">=</span> <span class="n">norm_vector</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">norm_vector</span><span class="p">)</span> <span class="c1"># nomalized the norm_vector</span>
+
+                            <span class="n">check_duplicity</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name_string</span><span class="p">)</span>
+
+                            <span class="n">mol_norm_vector_tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">norm_vector_normalized</span><span class="p">)</span>
+
+        <span class="n">avg_norm_vector</span> <span class="o">=</span> <span class="n">average</span><span class="p">(</span><span class="n">mol_norm_vector_tmp</span><span class="p">)</span>
+
+        <span class="n">avg_norm_vector_normalized</span> <span class="o">=</span> <span class="n">avg_norm_vector</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">avg_norm_vector</span><span class="p">)</span> <span class="c1"># normalized</span>
+
+        <span class="n">mol_norm_vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_norm_vector_normalized</span><span class="p">)</span>
+
+    <span class="n">mol_center_norm_vector</span> <span class="o">=</span> <span class="n">average</span><span class="p">(</span><span class="n">mol_norm_vector</span><span class="p">)</span>
+
+    <span class="n">mol_center_norm_vector_normalized</span> <span class="o">=</span> <span class="n">mol_center_norm_vector</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">mol_center_norm_vector</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mol_center_location</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mol_center_norm_vector_normalized</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">adsSite_center_location</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">adsSites_center_norm_vector_normalized</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="check_distance"><a class="viewcode-back" href="../../surfgen.html#surfgen.util.check_distance">[docs]</a><span class="k">def</span> <span class="nf">check_distance</span><span class="p">(</span><span class="n">molecule</span><span class="p">,</span> <span class="n">match_dict</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function can calculate the distance between the molecule and the adsorption sites.</span>
+
+<span class="sd">    Parameters:</span>
+
+<span class="sd">    molecule:</span>
+<span class="sd">        The molecule that we are interested in</span>
+
+<span class="sd">    match_dict:</span>
+<span class="sd">        The dictionary of the adsorbed information.</span>
+
+<span class="sd">    Return:</span>
+<span class="sd">        One real number. Shows the distance between molecule and adsorption sites.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">location_mol_indexes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">location_ads_sites</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># extract all the information</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">match_dict</span><span class="p">:</span>
+
+        <span class="n">coord_mol_index</span> <span class="o">=</span> <span class="n">molecule</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">index</span><span class="p">))]</span><span class="o">.</span><span class="n">position</span>
+
+        <span class="n">location_mol_indexes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coord_mol_index</span><span class="p">)</span>
+
+        <span class="n">location_ads_sites</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">match_dict</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">])</span>
+
+    <span class="c1"># start calculation</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">loc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">location_mol_indexes</span><span class="p">):</span>
+
+        <span class="n">loc_ads_site</span> <span class="o">=</span> <span class="n">location_ads_sites</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+
+        <span class="n">d</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span> <span class="o">-</span> <span class="n">loc_ads_site</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">d</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Zheng-Da He
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

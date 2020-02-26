@@ -1,7 +1,9 @@
 README.md
 setup.py
 surfgen/__init__.py
-surfgen/surfgen.py
+surfgen/core.py
+surfgen/math.py
+surfgen/util.py
 surfgen.egg-info/PKG-INFO
 surfgen.egg-info/SOURCES.txt
 surfgen.egg-info/dependency_links.txt

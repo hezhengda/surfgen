@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; surfgen 0.2.4 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/my_theme.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Surfgen Module" href="surfgen.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> surfgen
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Modules</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-0-import-surfgen-package">Example 0: Import surfgen package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-1-create-the-3x3x1-supercell-for-cu-111-surface-and-find-all-adsorption-sites">Example 1: Create the (3x3x1) supercell for Cu(111) surface and find all adsorption sites</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">surfgen</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="example-0-import-surfgen-package">
+<h2>Example 0: Import surfgen package<a class="headerlink" href="#example-0-import-surfgen-package" title="Permalink to this headline">¶</a></h2>
+<p>The main functionalities in surfgen package are all located in <strong>surfgen.core</strong> module.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">surfgen.core</span> <span class="kn">import</span> <span class="n">slab_generator</span><span class="p">,</span> <span class="n">surf_atom_finder</span><span class="p">,</span> <span class="n">connection_matrix</span><span class="p">,</span> <span class="n">get_coordination_number</span><span class="p">,</span> <span class="n">find_all_ads_sites</span><span class="p">,</span> <span class="n">align_adsorbate_one_atom</span><span class="p">,</span> <span class="n">align_adsorbate_multiple_atoms</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-1-create-the-3x3x1-supercell-for-cu-111-surface-and-find-all-adsorption-sites">
+<h2>Example 1: Create the (3x3x1) supercell for Cu(111) surface and find all adsorption sites<a class="headerlink" href="#example-1-create-the-3x3x1-supercell-for-cu-111-surface-and-find-all-adsorption-sites" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ase</span>
+<span class="kn">from</span> <span class="nn">ase.build</span> <span class="kn">import</span> <span class="n">molecule</span><span class="p">,</span> <span class="n">bulk</span>
+<span class="kn">from</span> <span class="nn">ase.visualize</span> <span class="kn">import</span> <span class="n">view</span>
+<span class="kn">from</span> <span class="nn">ase.io</span> <span class="kn">import</span> <span class="n">read</span>
+<span class="kn">from</span> <span class="nn">ase.constraints</span> <span class="kn">import</span> <span class="n">FixAtoms</span>
+
+<span class="c1"># python module</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">lc_Cu</span> <span class="o">=</span> <span class="mf">3.579</span> <span class="c1"># lattice parameter of Cu bulk</span>
+<span class="n">d_Cu</span> <span class="o">=</span> <span class="n">lc_Cu</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># closest distance between two Cu atoms</span>
+
+<span class="n">Cu_bulk</span> <span class="o">=</span> <span class="n">bulk</span><span class="p">(</span><span class="s1">&#39;Cu&#39;</span><span class="p">,</span> <span class="s1">&#39;fcc&#39;</span><span class="p">,</span> <span class="n">lc_Cu</span><span class="p">)</span>
+
+<span class="c1"># slab_generator will return a list of slab surfaces, we should check all of them first and then determine which one we want</span>
+<span class="n">slab_list</span> <span class="o">=</span> <span class="n">slab_generator</span><span class="p">(</span><span class="n">bulk</span><span class="o">=</span><span class="n">Cu_bulk</span><span class="p">,</span> <span class="n">miller_index</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">slab_height</span><span class="o">=</span><span class="mf">8.0</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="mf">18.0</span><span class="p">,</span> <span class="n">supercell</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">slab</span> <span class="o">=</span> <span class="n">slab_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">view</span><span class="p">(</span><span class="n">slab</span><span class="p">)</span>
+
+<span class="c1"># use surf_atom_finder to find all atoms in first surface layer</span>
+<span class="n">surf_atoms</span> <span class="o">=</span> <span class="n">surf_atom_finder</span><span class="p">(</span><span class="n">slab</span><span class="p">)</span>
+<span class="n">slab_cpy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">slab</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">FixAtoms</span><span class="p">(</span><span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">atom</span><span class="o">.</span><span class="n">index</span> <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">slab_cpy</span> <span class="k">if</span> <span class="n">atom</span><span class="o">.</span><span class="n">index</span> <span class="ow">in</span> <span class="n">surf_atoms</span><span class="p">])</span>
+<span class="n">slab_cpy</span><span class="o">.</span><span class="n">set_constraint</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">view</span><span class="p">(</span><span class="n">slab_cpy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">surf_atoms</span><span class="p">)</span>
+
+<span class="c1"># create connection_matrix</span>
+<span class="n">connector</span><span class="p">,</span> <span class="n">conn_coordinates</span><span class="p">,</span> <span class="n">outer_atom_index</span> <span class="o">=</span> <span class="n">connection_matrix</span><span class="p">(</span><span class="n">slab</span><span class="p">,</span> <span class="n">surf_atoms</span><span class="p">,</span> <span class="n">d_Cu</span><span class="p">)</span>
+
+<span class="c1"># find coordination number</span>
+<span class="n">coord_num</span> <span class="o">=</span> <span class="n">get_coordination_number</span><span class="p">(</span><span class="n">connector</span><span class="p">)</span>
+
+<span class="c1"># find all adsorption site</span>
+<span class="n">ads_sites</span> <span class="o">=</span> <span class="n">find_all_ads_sites</span><span class="p">(</span><span class="n">slab</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">conn_coordinates</span><span class="p">,</span> <span class="n">surf_atoms</span><span class="p">,</span> <span class="n">d_Cu</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ads_sites</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For the example, you will get:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">{</span><span class="s1">&#39;ontop&#39;</span>: <span class="o">{</span><span class="s1">&#39;location&#39;</span>: <span class="o">[</span>array<span class="o">([</span> <span class="m">1</span>.67828676,  <span class="m">0</span>.97039162, <span class="m">18</span>.16279368<span class="o">])</span>, array<span class="o">([</span> <span class="m">2</span>.93945124,  <span class="m">3</span>.16126249, <span class="m">18</span>.28182945<span class="o">])</span>, array<span class="o">([</span> <span class="m">4</span>.20061572,  <span class="m">5</span>.35213335, <span class="m">18</span>.40086522<span class="o">])</span>, array<span class="o">([</span> <span class="m">4</span>.20622089,  <span class="m">0</span>.97039162, <span class="m">18</span>.28182945<span class="o">])</span>, array<span class="o">([</span> <span class="m">5</span>.46738537,  <span class="m">3</span>.16126249, <span class="m">18</span>.40086522<span class="o">])</span>, array<span class="o">([</span> <span class="m">6</span>.72854985,  <span class="m">5</span>.35213335, <span class="m">18</span>.51990099<span class="o">])</span>, array<span class="o">([</span> <span class="m">6</span>.73415503,  <span class="m">0</span>.97039162, <span class="m">18</span>.40086522<span class="o">])</span>, array<span class="o">([</span> <span class="m">7</span>.9953195 ,  <span class="m">3</span>.16126249, <span class="m">18</span>.51990099<span class="o">])</span>, array<span class="o">([</span> <span class="m">9</span>.25648398,  <span class="m">5</span>.35213335, <span class="m">18</span>.63893676<span class="o">])]</span>, <span class="s1">&#39;norm_vector&#39;</span>: <span class="o">[</span>array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])]</span>, <span class="s1">&#39;label&#39;</span>: <span class="o">[</span><span class="s1">&#39;3&#39;</span>, <span class="s1">&#39;7&#39;</span>, <span class="s1">&#39;11&#39;</span>, <span class="s1">&#39;15&#39;</span>, <span class="s1">&#39;19&#39;</span>, <span class="s1">&#39;23&#39;</span>, <span class="s1">&#39;27&#39;</span>, <span class="s1">&#39;31&#39;</span>, <span class="s1">&#39;35&#39;</span><span class="o">]}</span>, <span class="s1">&#39;bridge&#39;</span>: <span class="o">{</span><span class="s1">&#39;location&#39;</span>: <span class="o">[</span>array<span class="o">([</span> <span class="m">2</span>.32297459,  <span class="m">2</span>.07398296, <span class="m">17</span>.92275437<span class="o">])</span>, array<span class="o">([</span> <span class="m">2</span>.95635942,  <span class="m">0</span>.97854753, <span class="m">17</span>.92275437<span class="o">])</span>, array<span class="o">([</span> <span class="m">2</span>.95635942,  <span class="m">0</span>.97854753, <span class="m">17</span>.92275437<span class="o">])</span>, array<span class="o">([</span> <span class="m">3</span>.58413907,  <span class="m">4</span>.26485383, <span class="m">18</span>.04179014<span class="o">])</span>, array<span class="o">([</span> <span class="m">4</span>.2175239 ,  <span class="m">3</span>.1694184 , <span class="m">18</span>.04179014<span class="o">])</span>, array<span class="o">([</span> <span class="m">4</span>.2175239 ,  <span class="m">3</span>.1694184 , <span class="m">18</span>.04179014<span class="o">])</span>, array<span class="o">([</span> <span class="m">4</span>.2175239 ,  <span class="m">3</span>.1694184 , <span class="m">18</span>.04179014<span class="o">])</span>, array<span class="o">([</span> <span class="m">5</span>.47868838,  <span class="m">5</span>.36028926, <span class="m">18</span>.16082591<span class="o">])</span>, array<span class="o">([</span> <span class="m">5</span>.47868838,  <span class="m">5</span>.36028926, <span class="m">18</span>.16082591<span class="o">])</span>, array<span class="o">([</span> <span class="m">5</span>.48429356,  <span class="m">0</span>.97854753, <span class="m">18</span>.04179014<span class="o">])</span>, array<span class="o">([</span> <span class="m">5</span>.48429356,  <span class="m">0</span>.97854753, <span class="m">18</span>.04179014<span class="o">])</span>, array<span class="o">([</span> <span class="m">6</span>.74545804,  <span class="m">3</span>.1694184 , <span class="m">18</span>.16082591<span class="o">])</span>, array<span class="o">([</span> <span class="m">6</span>.74545804,  <span class="m">3</span>.1694184 , <span class="m">18</span>.16082591<span class="o">])</span>, array<span class="o">([</span> <span class="m">6</span>.74545804,  <span class="m">3</span>.1694184 , <span class="m">18</span>.16082591<span class="o">])</span>, array<span class="o">([</span> <span class="m">8</span>.00662251,  <span class="m">5</span>.36028926, <span class="m">18</span>.27986168<span class="o">])</span>, array<span class="o">([</span> <span class="m">8</span>.00662251,  <span class="m">5</span>.36028926, <span class="m">18</span>.27986168<span class="o">])]</span>, <span class="s1">&#39;norm_vector&#39;</span>: <span class="o">[</span>array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])]</span>, <span class="s1">&#39;label&#39;</span>: <span class="o">[</span><span class="s1">&#39;3.7&#39;</span>, <span class="s1">&#39;3.15&#39;</span>, <span class="s1">&#39;7.15&#39;</span>, <span class="s1">&#39;7.11&#39;</span>, <span class="s1">&#39;7.19&#39;</span>, <span class="s1">&#39;11.19&#39;</span>, <span class="s1">&#39;15.19&#39;</span>, <span class="s1">&#39;11.23&#39;</span>, <span class="s1">&#39;19.23&#39;</span>, <span class="s1">&#39;15.27&#39;</span>, <span class="s1">&#39;19.27&#39;</span>, <span class="s1">&#39;19.31&#39;</span>, <span class="s1">&#39;23.31&#39;</span>, <span class="s1">&#39;27.31&#39;</span>, <span class="s1">&#39;23.35&#39;</span>, <span class="s1">&#39;31.35&#39;</span><span class="o">]}</span>, <span class="s1">&#39;hollow&#39;</span>: <span class="o">{</span><span class="s1">&#39;location&#39;</span>: <span class="o">[</span>array<span class="o">([</span> <span class="m">2</span>.96482896,  <span class="m">1</span>.71427509, <span class="m">17</span>.74288887<span class="o">])</span>, array<span class="o">([</span> <span class="m">4</span>.22599344,  <span class="m">3</span>.90514596, <span class="m">17</span>.86192464<span class="o">])</span>, array<span class="o">([</span> <span class="m">4</span>.22786183,  <span class="m">2</span>.44456538, <span class="m">17</span>.82224605<span class="o">])</span>, array<span class="o">([</span> <span class="m">5</span>.48902631,  <span class="m">4</span>.63543625, <span class="m">17</span>.94128182<span class="o">])</span>, array<span class="o">([</span> <span class="m">5</span>.49276309,  <span class="m">1</span>.71427509, <span class="m">17</span>.86192464<span class="o">])</span>, array<span class="o">([</span> <span class="m">6</span>.75392757,  <span class="m">3</span>.90514596, <span class="m">17</span>.98096041<span class="o">])</span>, array<span class="o">([</span> <span class="m">6</span>.75579596,  <span class="m">2</span>.44456538, <span class="m">17</span>.94128182<span class="o">])</span>, array<span class="o">([</span> <span class="m">8</span>.01696044,  <span class="m">4</span>.63543625, <span class="m">18</span>.06031759<span class="o">])]</span>, <span class="s1">&#39;norm_vector&#39;</span>: <span class="o">[</span>array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])</span>, array<span class="o">([</span>-0.04701866, -0.02718636,  <span class="m">0</span>.99852398<span class="o">])]</span>, <span class="s1">&#39;label&#39;</span>: <span class="o">[</span><span class="s1">&#39;3.7.15&#39;</span>, <span class="s1">&#39;7.11.19&#39;</span>, <span class="s1">&#39;7.15.19&#39;</span>, <span class="s1">&#39;11.19.23&#39;</span>, <span class="s1">&#39;15.19.27&#39;</span>, <span class="s1">&#39;19.23.31&#39;</span>, <span class="s1">&#39;19.27.31&#39;</span>, <span class="s1">&#39;23.31.35&#39;</span><span class="o">]}</span>, <span class="s1">&#39;four_fold&#39;</span>: <span class="o">{</span><span class="s1">&#39;location&#39;</span>: <span class="o">[]</span>, <span class="s1">&#39;norm_vector&#39;</span>: <span class="o">[]</span>, <span class="s1">&#39;label&#39;</span>: <span class="o">[]}}</span>
+</pre></div>
+</div>
+<p>There are three arrays in ads_sites:</p>
+<ul class="simple">
+<li><p>‘location’: which contains all the locations of adsorption sites</p></li>
+<li><p>‘norm_vector’: which contains all norm_vectors of adsorption sites</p></li>
+<li><p>‘label’: which contains the structural information about the adsorption site. It tells us which atoms form the active site</p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="surfgen.html" class="btn btn-neutral float-left" title="Surfgen Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Zheng-Da He
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
