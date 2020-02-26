@@ -67,7 +67,19 @@ def slab_generator(bulk, miller_index, slab_height, vacuum, supercell):
 
     for slab in slab_gen.get_slabs():
 
-        ase_slabs.append(AseAtomsAdaptor.get_atoms(slab) * supercell)
+        slab_ortho = slab.get_orthogonal_c_slab() # force the cell to be orthogonal
+
+        slab_ortho_supercell = slab_ortho * supercell
+
+        slab_ortho_supercell_ase = AseAtomsAdaptor.get_atoms(slab_ortho_supercell)
+
+        lowest_height = find_lowest_point(slab_ortho_supercell_ase)
+
+        for atom in slab_ortho_supercell_ase:
+
+            atom.position[2] -= lowest_height # move all atoms in the cell
+
+        ase_slabs.append(slab_ortho_supercell_ase)
 
     return ase_slabs
 

@@ -639,3 +639,28 @@ def check_distance(molecule, match_dict):
         d += np.linalg.norm(loc - loc_ads_site)
 
     return d
+
+def find_lowest_point(slab):
+
+    """
+    This function is able to find the lowest point of the slab, it is used in slab_generator function.
+
+    Parameters:
+
+    Slab:
+        ASE Atoms Object. The slab that we want.
+
+    Return:
+        A real number. Return the lowest point in the slab
+    """
+
+    # initialize a relatively big number
+    lowest_height = 100000
+
+    for atom in slab:
+
+        if atom.position[2] < lowest_height:
+
+            lowest_height = atom.position[2]
+
+    return lowest_height
